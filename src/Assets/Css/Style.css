@@ -1,0 +1,418 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background: #f0f0f0;
+}
+
+p {
+  margin-bottom: 0px;
+}
+
+th {
+  border: none;
+}
+
+tr {
+  border: none;
+}
+
+td {
+  border: none;
+}
+
+.form-control {
+  width: 340px;
+}
+
+/* fonts */
+.big-title-white {
+  color: white;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.big-title-black {
+  color: black;
+  font-size: 30px;
+}
+
+.title-white {
+  color: white;
+  font-size: 27px;
+}
+
+.title-black {
+  color: black;
+  font-size: 27px;
+}
+
+.heading-white {
+  color: white;
+  font-size: 22px;
+}
+
+.heading-black {
+  color: black;
+  font-size: 22px;
+}
+
+.body-large-white {
+  color: white;
+  font-size: 17px;
+}
+
+.body-large-black {
+  text-align: center;
+  color: black;
+  font-size: 17px;
+}
+
+.body-black {
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.body-white {
+  color: white;
+  font-size: 14px;
+}
+
+.subtitle-black {
+  color: black;
+  font-size: 11px;
+}
+
+.subtitle-white {
+  color: white;
+  font-size: 11px;
+}
+
+.sm-black {
+  color: black;
+  font-size: 9px;
+}
+
+.sm-white {
+  color: white;
+  font-size: 9px;
+}
+
+.link-text {
+  color: #2374AB;
+  font-weight: 500;
+}
+
+/* ========================================= */
+/* Sidebar */
+/* =========================================== */
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 190px;
+  background-color: #f8f9fa !important;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  z-index: 1000;
+}
+
+.sidebar-btn {
+  width: 170px;
+  height: 50px;
+  background: #2374AB;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.sidebar-btn-collapse {
+  width: 50px;
+  height: 40px;
+  background: #2374AB;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #444;
+  display: block;
+  transition: 0.5s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+  color: #2374AB;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  border: none;
+  background: none;
+  padding: 5px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+}
+
+#mySidebar {
+  transition: margin-left .5s;
+}
+
+.mobile-box {
+  width: 140px;
+  background: #7855B8;
+  border-radius: 4px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+
+/* ========================================= */
+/* Sidebar End*/
+/* =========================================== */
+
+
+/* ========================================== */
+/* Login Page */
+
+.login-left {
+  overflow-y: hidden;
+  background: #2374AB;
+  padding: 1rem 4rem;
+}
+
+/* Login Page Right Start */
+.login-right {
+  overflow-y: scroll;
+  background: #ffffff;
+}
+
+.login-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.login-icon-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: rgba(189, 205, 216, 0.5);
+}
+
+.login-icon-bg img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-desc {
+  width: 400px;
+  margin: auto;
+  line-height: 25px;
+}
+
+.form-login {
+  padding: 1rem 10.5rem 1rem 10.5rem;
+}
+
+.btn-login {
+  background-color: #2374AB;
+  color: white;
+  width: 340px;
+  height: 50px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* ========================== */
+/* Login Page Right End */
+/* =========================== */
+
+/* ============================== */
+/* Dashboard Page Start */
+/* =============================== */
+
+.box {
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 120px;
+  padding: 1rem;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.box-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #49B8C41A;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.total-response-graph-box {
+  background-color: white;
+  height: 332px;
+  border-radius: 20px;
+  width: 845px;
+}
+
+.total-response-box {
+  background-color: #FB5012;
+  height: 332px;
+  border-radius: 20px;
+  width: 260px;
+}
+
+.color-box-blue {
+  background: #006CA5;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.color-box-green {
+  background: #16DB93;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.show-select {
+  color: #2374AB;
+  border: 1px solid #2374AB;
+  border-radius: 3px;
+}
+
+.pie-image {
+  background: url('../Images/pie-round.png');
+  height: 136px;
+  width: 136px;
+}
+
+.icon-over-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 136px;
+  width: 136px;
+}
+
+.dot-white {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.dot-1 {
+  background: #59A8A5;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.dot-2 {
+  background: #62B7CB;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.dot-3 {
+  background: #FFA837;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+}
+
+.progress {
+  background-color: rgba(233, 236, 239, 0.5);
+  height: 10px;
+}
+
+.progress-bar {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+
+/* ====================================== */
+/* ============ Form Builder ============ */
+/* ====================================== */
+
+.fb-elements {
+  background: rgba(35, 116, 171, 0.2);
+}
+
+.fb-elements .fb-text {
+  color: #2374AB !important;
+
+}
+
+.fb-elements .fb-icons {
+  color: rgba(35, 116, 171, 1);
+}
+
+.fb-bg-circle {
+  background-color: rgba(35, 116, 171, 0.1);
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+}
+
+.publish-btn {
+  width: 140px;
+  height: 40px;
+  font-size: 15px;
+  background: #2374AB;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

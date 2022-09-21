@@ -4,22 +4,74 @@
 
 body {
   background: #f0f0f0;
+  overflow-x: hidden;
 }
 
 p {
   margin-bottom: 0px;
 }
 
-th {
+nav {
+  position: fixed !important;
+  width: -webkit-fill-available !important;
+  z-index: 1000;
+  background: #fff !important;
+}
+
+/* TABLE CSS */
+.tableFixHeadDash {
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+
+.tableFixHeadDash tbody {
+  display: block;
+  height: 200px;
+}
+
+.tableFixHeadDash thead tr {
+  display: block;
+}
+
+.tableFixHeadDash th,
+.tableFixHeadDash td {
+  width: 150px;
+  text-align: start;
   border: none;
 }
 
-tr {
+.tableFixHead {
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+.tableFixHead tbody {
+  display: block;
+  height: 300px;
+}
+
+.tableFixHead thead tr {
+  display: block;
+}
+
+.tableFixHead th,
+.tableFixHead td {
+  width: 200px;
+  text-align: start;
   border: none;
 }
 
-td {
-  border: none;
+
+/* TABLE CSS END */
+.extra-pad {
+  padding-top: 5rem !important;
+}
+
+.response {
+  color: rgba(35, 116, 171, 1) !important;
 }
 
 .form-control {
@@ -113,11 +165,11 @@ td {
   margin: 0;
   padding: 0;
   width: 190px;
-  background-color: #f8f9fa !important;
+  background-color: #fff !important;
   position: fixed;
   height: 100%;
   overflow: auto;
-  z-index: 1000;
+  z-index: 5000;
 }
 
 .sidebar-btn {
@@ -167,6 +219,13 @@ td {
   padding: 5px;
 }
 
+.sidebar-drop {
+  justify-content: start !important;
+  height: auto !important;
+  color: #444;
+  transition: 0.5s;
+}
+
 /* The button used to open the sidebar */
 .openbtn {
   font-size: 20px;
@@ -212,7 +271,7 @@ td {
 
 /* ========================================== */
 /* Login Page */
-
+/* ========================================== */
 .login-left {
   overflow-y: hidden;
   background: #2374AB;
@@ -379,13 +438,16 @@ td {
   background-color: rgba(255, 255, 255, 1);
 }
 
+/* ====================================== */
+/* ========= Dashboard End ========= */
+/* ====================================== */
 
 /* ====================================== */
-/* ============ Form Builder ============ */
+/* ========= Form Builder Start ========= */
 /* ====================================== */
 
 .fb-elements {
-  background: rgba(35, 116, 171, 0.2);
+  background: rgba(35, 116, 171, 0.1);
 }
 
 .fb-elements .fb-text {
@@ -415,4 +477,132 @@ td {
   display: flex;
   align-items: center;
   justify-content: center
+}
+
+/* ====================================== */
+/* ========= Form Builder End ========= */
+/* ====================================== */
+
+/* ====================================== */
+/* ========= Error Page Start ========= */
+/* ====================================== */
+.error-bg-circle {
+  background-color: rgba(35, 116, 171, 0.1);
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+}
+
+/* ====================================== */
+/* ========= Error Page End ========= */
+/* ====================================== */
+
+
+/* ====================================== */
+/* ========= Applist Page Start ========= */
+/* ====================================== */
+.popup-hover:hover {
+  background-color: rgb(197, 196, 196);
+  transition: background-color 0.3s;
+  border-radius: 3px;
+}
+
+/* ====================================== */
+/* ========= Applist Page End ========= */
+/* ====================================== */
+
+/* ====================================== */
+/* ========= Response Page Start ========= */
+/* ====================================== */
+
+
+.download-btn {
+  width: 190px;
+  height: 40px;
+  font-size: 13px;
+  background: #2374AB;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.default-select {
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.response-form-name {
+  background: rgba(35, 116, 171, 0.2);
+  color: rgba(35, 116, 171, 1);
+  border-radius: 10px;
+  text-align: center;
+  width: 70%;
+  font-size: 12px;
+  padding: 3px;
+}
+
+/* ====================================== */
+/* ========= Response Page End ========= */
+/* ====================================== */
+
+/* ====================================== */
+/* ====Form Link List & App Link List==== */
+/* ====================================== */
+.dropbtn {
+  width: 150px;
+  height: 40px;
+  font-size: 13px;
+  background: white;
+  border-radius: 5px;
+  border: none;
+  color: #2374AB;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: white;
 }

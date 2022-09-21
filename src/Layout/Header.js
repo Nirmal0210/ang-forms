@@ -4,7 +4,7 @@ import { BsFillBellFill } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
         <div
           className="justify-content-end collapse navbar-collapse"
@@ -32,6 +32,7 @@ const Header = () => {
                 src={require("./../Assets/Images/user-icon.png")}
                 width="25px"
                 height="25px"
+                alt="user-icon"
               />
               <NavLink className="nav-link" href="#" aria-disabled="true">
                 <p className="body-large-black">Profile Name</p>

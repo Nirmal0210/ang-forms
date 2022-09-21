@@ -1,3 +1,4 @@
+import "reactjs-popup/dist/index.css";
 import "./Assets/Css/Style.css";
 import Login from "./Pages/Login/Login";
 import Header from "./Layout/Header";
@@ -13,6 +14,7 @@ function App() {
           {location.pathname !== "/createform" && <Sidebar />}
           <div id="main">
             <Header />
+
             <RouterLayout />
           </div>
         </>

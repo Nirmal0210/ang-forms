@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdOutlineMessage } from "react-icons/md";
 import { AiOutlineUser, AiOutlinePlus } from "react-icons/ai";
 import { IoLogoGooglePlaystore, IoLogoApple } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { IoMdSettings } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import { BsJoystick } from "react-icons/bs";
+import { BiTask } from "react-icons/bi";
+
 const Sidebar = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(true);
@@ -57,35 +61,47 @@ const Sidebar = () => {
           </button>
         </div>
         <div>
-          <a href="#" className="d-flex align-items-center mt-4">
+          <Link to="/" className="d-flex align-items-center mt-4">
             <MdDashboard className="me-3" />
             {!toggle && <div className="body-black">Dashboard</div>}
-          </a>
-          <a href="#" className="d-flex align-items-center mt-3">
-            <MdDashboard className="me-3" />
-            {!toggle && <p className="body-black">Forms</p>}
-          </a>
-          <a href="#" className="d-flex align-items-center mt-3">
-            <MdDashboard className="me-3" />
+          </Link>
+          <Link to="#" className="d-flex align-items-center dropdown mt-3">
+            <button className="dropbtn p-0 sidebar-drop">
+              <BiTask style={{ fontSize: "19px" }} className="me-3" />
+              {!toggle && <div className="body-black">Forms</div>}
+            </button>
+            {!toggle && (
+              <div className="dropdown-content mt-5">
+                <Link to="/appformlist" className="d-flex align-items-center">
+                  <p className="subtitle-black ms-2">App Forms</p>
+                </Link>
+                <Link to="/formlinklist" className="d-flex align-items-center">
+                  <p className="subtitle-black ms-2">Form Links</p>
+                </Link>
+              </div>
+            )}
+          </Link>
+          <Link to="/applist" className="d-flex align-items-center mt-3">
+            <BsJoystick className="me-3" />
             {!toggle && <p className="body-black">My Apps</p>}
-          </a>
-          <a href="#" className="d-flex align-items-center mt-3">
-            <MdDashboard className="me-3" />
+          </Link>
+          <Link to="/responses" className="d-flex align-items-center mt-3">
+            <MdOutlineMessage className="me-3" />
             {!toggle && <p className="body-black">Responses</p>}
-          </a>
-          <a href="#" className="d-flex align-items-center mt-3">
+          </Link>
+          <Link to="#" className="d-flex align-items-center mt-3">
             <AiOutlineUser className="me-3" />
             {!toggle && <p className="body-black">Profile</p>}
-          </a>
-          <a href="#" className="d-flex align-items-center mt-3">
-            <MdDashboard className="me-3" />
+          </Link>
+          <Link to="#" className="d-flex align-items-center mt-3">
+            <IoMdSettings className="me-3" />
             {!toggle && <p className="body-black">Settings</p>}
-          </a>
+          </Link>
         </div>
         {!toggle && (
           <div className="d-flex justify-content-center mt-3">
             <div className="mobile-box text-center p-2">
-              <img src={require("../Assets/Images/mobile.png")} />
+              <img src={require("../Assets/Images/mobile.png")} alt="mobile" />
               <p className="my-2 sm-white">Download the mobile app</p>
               <div className="d-flex justify-content-evenly">
                 <div className="dot-white">

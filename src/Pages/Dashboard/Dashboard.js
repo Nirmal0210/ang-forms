@@ -2,7 +2,7 @@ import React from "react";
 import { BsJoystick } from "react-icons/bs";
 const Dashboard = () => {
   return (
-    <div className="container pt-4">
+    <div className="container extra-pad">
       <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 justify-content-between">
         <div className="col box">
           <div className="row d-flex align-items-center">
@@ -12,6 +12,7 @@ const Dashboard = () => {
                   src={require("../../Assets/Images/chain-bg.png")}
                   width="25px"
                   height="25px"
+                  alt="chain"
                 />
               </div>
             </div>
@@ -31,6 +32,7 @@ const Dashboard = () => {
                   src={require("../../Assets/Images/chain-bg.png")}
                   width="25px"
                   height="25px"
+                  alt="chain"
                 />
               </div>
             </div>
@@ -50,6 +52,7 @@ const Dashboard = () => {
                   src={require("../../Assets/Images/chain-bg.png")}
                   width="25px"
                   height="25px"
+                  alt="chain"
                 />
               </div>
             </div>
@@ -69,6 +72,7 @@ const Dashboard = () => {
                   src={require("../../Assets/Images/chain-bg.png")}
                   width="25px"
                   height="25px"
+                  alt="chain"
                 />
               </div>
             </div>
@@ -150,6 +154,7 @@ const Dashboard = () => {
                 src={require("../../Assets/Images/speaker.png")}
                 width="25px"
                 height="25px"
+                alt="speaker"
               />
             </div>
             <div>
@@ -192,15 +197,25 @@ const Dashboard = () => {
           <div className="body-large-black fw-bold text-start">
             Recent Response
           </div>
-          <div className="mt-5 px-3">
+          <div className="mt-5 px-3 tableFixHeadDash">
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">Form Id</th>
-                  <th scope="col">Form Name</th>
-                  <th scope="col">App/link</th>
-                  <th scope="col">Impressions</th>
-                  <th scope="col">Responses</th>
+                  <th scope="col" className="body-black fw-bold">
+                    Form Id
+                  </th>
+                  <th scope="col" className="body-black fw-bold">
+                    Form Name
+                  </th>
+                  <th scope="col" className="body-black fw-bold">
+                    App/link
+                  </th>
+                  <th scope="col" className="body-black fw-bold">
+                    Impressions
+                  </th>
+                  <th scope="col" className="body-black fw-bold">
+                    Responses
+                  </th>
                 </tr>
               </thead>
               <tbody>

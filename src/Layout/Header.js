@@ -1,11 +1,26 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { BsFillBellFill } from "react-icons/bs";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { BsArrowLeft, BsFillBellFill } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
+        {location.pathname === "/createform" && (
+          <div
+            className="d-flex justify-content-center align-items-center mx-auto"
+            onClick={() => navigate(-1)}
+          >
+            <div className="response">
+              <BsArrowLeft style={{ fontSize: "20px !important" }} />
+            </div>
+            <div className="ms-2">
+              <p className="body-large-black response">Back to last page</p>
+            </div>
+          </div>
+        )}
         <div
           className="justify-content-end collapse navbar-collapse"
           id="navbarNav"

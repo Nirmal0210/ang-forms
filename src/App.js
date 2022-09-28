@@ -9,9 +9,10 @@ function App() {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== "/login" ? (
+      {location.pathname !== "/login" && location.pathname !== "/register" ? (
         <>
-          {location.pathname !== "/createform" && <Sidebar />}
+          {location.pathname !== "/createform" &&
+            location.pathname !== "/reactform" && <Sidebar />}
           <div id="main">
             <Header />
 

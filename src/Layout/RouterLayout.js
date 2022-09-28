@@ -10,12 +10,15 @@ import AppList from "../Pages/AppList/AppList";
 import Responses from "../Pages/Responses/Responses";
 import AppFormList from "../Pages/FormList/AppFormList";
 import FormLinkList from "../Pages/FormList/FormLinkList";
-
+import Notifications from "../Pages/Notifications/Notifications";
+import ReactForms from "../Pages/FormBuilder/ReactForms";
+import Register from "../Pages/Login/Register";
 const RouterLayout = () => {
   return (
     <Routes>
-      <Route exact path="/login" element={<Login />} />
       <Route exact path="/" element={<Dashboard />} />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
       <Route exact path="/createform" element={<CreateForm />} />
       <Route exact path="/editprofile" element={<EditProfile />} />
       <Route exact path="/oops" element={<Oops />} />
@@ -24,6 +27,9 @@ const RouterLayout = () => {
       <Route exact path="/responses" element={<Responses />} />
       <Route exact path="/appformlist" element={<AppFormList />} />
       <Route exact path="/formlinklist" element={<FormLinkList />} />
+      <Route exact path="/notifications" element={<Notifications />} />
+      <Route exact path="/editprofile" element={<EditProfile />} />
+      <Route exact path="/reactform" element={<ReactForms />} />
     </Routes>
   );
 };

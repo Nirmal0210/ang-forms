@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdDashboard, MdOutlineMessage } from "react-icons/md";
 import { AiOutlineUser, AiOutlinePlus } from "react-icons/ai";
 import { IoLogoGooglePlaystore, IoLogoApple } from "react-icons/io5";
@@ -23,6 +23,14 @@ const Sidebar = () => {
     document.getElementById("main").style.marginLeft = "75px";
     setToggle(!toggle);
   };
+
+  useEffect(() => {
+    if (true) {
+      document.getElementById("mySidebar").style.width = "75px";
+      document.getElementById("main").style.marginLeft = "75px";
+    }
+  }, []);
+
   return (
     <>
       <div id="mySidebar" className="sidebar">
@@ -89,7 +97,7 @@ const Sidebar = () => {
             <MdOutlineMessage className="me-3" />
             {!toggle && <p className="body-black">Responses</p>}
           </Link>
-          <Link to="#" className="d-flex align-items-center mt-3">
+          <Link to="/editprofile" className="d-flex align-items-center mt-3">
             <AiOutlineUser className="me-3" />
             {!toggle && <p className="body-black">Profile</p>}
           </Link>

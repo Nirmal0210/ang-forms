@@ -74,8 +74,8 @@ nav {
   color: rgba(35, 116, 171, 1) !important;
 }
 
-.form-control {
-  width: 340px;
+.form-control-manual {
+  width: 340px !important;
 }
 
 /* fonts */
@@ -222,7 +222,7 @@ nav {
 .sidebar-drop {
   justify-content: start !important;
   height: auto !important;
-  color: #444;
+  color: #444 !important;
   transition: 0.5s;
 }
 
@@ -467,18 +467,114 @@ nav {
 }
 
 .publish-btn {
-  width: 140px;
-  height: 40px;
+  width: 140px !important;
+  height: 40px !important;
   font-size: 15px;
-  background: #2374AB;
+  background: #2374AB !important;
   border-radius: 5px;
   border: none;
-  color: white;
+  color: white !important;
   display: flex;
   align-items: center;
   justify-content: center
 }
 
+.btn-toolbar {
+  padding-bottom: 10px;
+  /* margin: auto; */
+}
+
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+/* button {
+  border: none;
+  padding: 8px;
+  margin-right: 2px;
+} */
+
+.blue {
+  background: rgba(35, 116, 171, 0.1);
+  color: #2374AB !important;
+  border: none;
+  padding: 8px;
+}
+
+.green {
+  background-color: darkolivegreen;
+  color: white;
+}
+
+.btn-primary {
+  background: rgba(35, 116, 171, 0.1) !important;
+  color: #2374AB !important;
+  border: none;
+  padding: 8px !important;
+}
+
+/* Formio */
+.card-header {
+  background-color: white !important;
+}
+
+.card-header .builder-group-button {
+  font-weight: 600;
+}
+
+/* 
+.formcomponents .formcomponent {
+  width: 136px !important;
+}
+
+.formbuilder .formcomponents {
+  width: 320px !important;
+} */
+
+.formbuilder .formarea {
+  /* width: 1175px !important; */
+  background-color: white !important;
+  border-radius: 5px;
+  padding: 10px 10px;
+  /* margin-bottom: 10px !important; */
+}
+
+.formio-dialog-overlay {
+  position: relative !important;
+  /* width: 40% !important; */
+  z-index: none !important;
+  background: white !important;
+}
+
+.formio-dialog.formio-dialog-theme-default .formio-dialog-content {
+  float: right !important;
+  /* max-width:40% !important; */
+  background-color: white !important;
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+.configuration-box {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.button-cross {
+  background: rgba(35, 116, 171, 0.1) !important;
+  color: #2374AB !important;
+  border: none;
+  padding: 0px 4px !important;
+  border-radius: 3px;
+}
+
+/* Formio End */
 /* ====================================== */
 /* ========= Form Builder End ========= */
 /* ====================================== */
@@ -605,4 +701,229 @@ nav {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   background-color: white;
+}
+
+/* ============================================ */
+/* ==== Form Link List & App Link List End ==== */
+/* ============================================ */
+
+
+/* =============================== */
+/* =======Notification Start====== */
+/* =============================== */
+
+.notification-userbox {
+  width: 50px;
+  height: 50px;
+  background: #326273;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-box {
+  padding: 1rem;
+  border-radius: 20px;
+  background-color: white;
+  overflow-y: scroll;
+  max-height: 520px;
+}
+
+/* =============================== */
+/* ======= Notification End ====== */
+/* =============================== */
+
+
+
+/* =================================== */
+/* ======== Profile Page Start======== */
+/* =================================== */
+
+.react-tabs {
+  display: flex;
+  height: 500px;
+  border-radius: 10px;
+  color: black;
+  background: white;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  margin: 0;
+  padding: 0;
+  color: rgba(35, 116, 171, 1);
+  background: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.react-tabs__tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  list-style: none;
+  padding: 12px 6px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.react-tabs__tab--selected {
+  border-right: 4px solid #2374AB;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+  padding: 2rem;
+  width: 800px;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
+  padding: 2rem;
+  width: 800px;
+}
+
+.react-tabs__tab {
+  padding-left: 15px;
+  display: flex;
+  align-items: center
+}
+
+.react-tabs__tab--selected {
+  padding-left: 15px;
+  background: rgba(35, 116, 171, 0.2);
+  color: rgba(35, 116, 171, 1);
+}
+
+.social-media-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  box-shadow: 0px 5px 24px rgba(0, 0, 0, 0.1);
+}
+
+.social-media-circle .icon {
+  font-size: 25px !important;
+}
+
+
+.react-tel-input .form-control {
+  width: 340px !important;
+}
+
+.tab-icon {
+  font-size: 20px !important;
+}
+
+/*============ Tab 2 ==========*/
+.subscription-box {
+  padding: 2rem;
+  width: 325px;
+  height: 350px;
+  /* background: #f0f0f0; */
+  border-radius: 20px;
+}
+
+.form-check-box {
+  background-color: #2374AB;
+  color: white;
+  border-radius: 15px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px !important;
+}
+
+.form-check-input:checked {
+  border: 1px solid white;
+  background-color: #2374AB;
+}
+
+.form-check-plan {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  font-size: 12px;
+  padding: 3px;
+}
+
+.checkbox-circle-one {
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 0px !important;
+  justify-content: space-between !important;
+}
+
+.check-input-one {
+  height: 20px !important;
+  width: 20px !important;
+  padding-inline: 5px !important;
+  border-radius: 50% !important;
+}
+
+.master-card {
+  padding: 1rem;
+  background: rgba(29, 60, 79, 1);
+  color: white;
+  border-radius: 5px;
+  height: 200px;
+  width: 350px;
+}
+
+.master-card-dotted {
+  padding: 1rem;
+  border: 1px dashed rgba(35, 116, 171, 1);
+  border-radius: 5px;
+  height: 200px;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-card-circle {
+  background: rgba(35, 116, 171, 0.3);
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2374AB;
+  border-radius: 25px;
+  width: 70px;
+  height: 20px;
+}
+
+/* .panel-content {
+  text-align: center;} */
+
+/* ==================================== */
+/* ========= Profile Page End ========= */
+/* ==================================== */
+
+
+.delete-box {
+  width: 452px;
+  height: 346px;
+
+  background: #FFFFFF;
+  border-radius: 13px;
 }

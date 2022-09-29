@@ -2,9 +2,12 @@ import React from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BsArrowLeft, BsFillBellFill } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { auth } from "../firebase";
+import RandomBackground from "../Components/RandomBackground";
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
@@ -39,18 +42,17 @@ const Header = () => {
 
             <li className="nav-item ms-3">
               <NavLink className="nav-link" href="#">
-                <BsFillBellFill />
+                <BsFillBellFill onClick={() => auth.signOut()} />
               </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center ms-3">
-              <img
-                src={require("./../Assets/Images/user-icon.png")}
-                width="25px"
-                height="25px"
-                alt="user-icon"
+              <RandomBackground
+                pName={currentUser.name}
+                pUrl={currentUser.profile}
+                pClass={"small"}
               />
               <NavLink className="nav-link" href="#" aria-disabled="true">
-                <p className="body-large-black">Profile Name</p>
+                <p className="body-large-black">{currentUser.name}</p>
               </NavLink>
               <MdOutlineKeyboardArrowDown />
             </li>

@@ -7,6 +7,7 @@ import { BiChevronRight, BiRefresh } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import ActionPopup from "../../Components/ActionPopup";
 const EditProfile = () => {
+  // let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   return (
     <div className="container extra-pad px-4">
       <div className="row">

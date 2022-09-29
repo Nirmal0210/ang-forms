@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../Pages/Login/Login";
 import Dashboard from "../Pages/Dashboard/Dashboard";
@@ -12,25 +12,120 @@ import AppFormList from "../Pages/FormList/AppFormList";
 import FormLinkList from "../Pages/FormList/FormLinkList";
 import Notifications from "../Pages/Notifications/Notifications";
 import ReactForms from "../Pages/FormBuilder/ReactForms";
-import Register from "../Pages/Login/Register";
+import Signup from "../Pages/Login/Signup";
+import { onAuthStateChanged } from "firebase/auth";
+import { AuthProvider } from "../AuthContext";
+import { auth } from "../firebase";
+import PrivateRoute from "../PrivateRoute";
+import { Navigate } from "react-router-dom";
+
 const RouterLayout = () => {
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+  }, []);
   return (
-    <Routes>
-      <Route exact path="/" element={<Dashboard />} />
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
-      <Route exact path="/createform" element={<CreateForm />} />
-      <Route exact path="/editprofile" element={<EditProfile />} />
-      <Route exact path="/oops" element={<Oops />} />
-      <Route exact path="/errorpage" element={<ErrorPage />} />
-      <Route exact path="/applist" element={<AppList />} />
-      <Route exact path="/responses" element={<Responses />} />
-      <Route exact path="/appformlist" element={<AppFormList />} />
-      <Route exact path="/formlinklist" element={<FormLinkList />} />
-      <Route exact path="/notifications" element={<Notifications />} />
-      <Route exact path="/editprofile" element={<EditProfile />} />
-      <Route exact path="/reactform" element={<ReactForms />} />
-    </Routes>
+    <AuthProvider value={{ currentUser }}>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/login"
+          element={!currentUser ? <Login /> : <Navigate to={"/"} replace />}
+        />
+        <Route
+          exact
+          path="/signup"
+          element={!currentUser ? <Signup /> : <Navigate to={"/"} replace />}
+        />
+        <Route
+          exact
+          path="/createform"
+          element={
+            <PrivateRoute>
+              <CreateForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/editprofile"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route exact path="/oops" element={<Oops />} />
+        <Route exact path="/errorpage" element={<ErrorPage />} />
+        <Route
+          exact
+          path="/applist"
+          element={
+            <PrivateRoute>
+              <AppList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/responses"
+          element={
+            <PrivateRoute>
+              <Responses />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/appformlist"
+          element={
+            <PrivateRoute>
+              <AppFormList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/formlinklist"
+          element={
+            <PrivateRoute>
+              <FormLinkList />
+            </PrivateRoute>
+          }
+        />
+        <Route exact path="/notifications" element={<Notifications />} />
+        <Route
+          exact
+          path="/editprofile"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          exact
+          path="/reactform"
+          element={
+            <PrivateRoute>
+              <ReactForms />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
   );
 };
 

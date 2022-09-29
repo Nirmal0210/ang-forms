@@ -1,6 +1,88 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { db, auth } from "../../firebase";
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 const Login = () => {
+  const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+  const [logUser, setLogUser] = useState({});
+  const signInWithGoogle = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+        await addDoc(collection(db, "users"), {
+          uid: user.uid,
+          name: user.displayName,
+          authProvider: "google",
+          email: user.email,
+          profile: user.photoURL,
+        });
+      }
+      if (user) {
+        localStorage.setItem("accessToken", user.accessToken);
+        const obj = {
+          uid: user.uid,
+          name: user.displayName,
+          uid: user.uid,
+          email: user.email,
+          authProvider: "google",
+          mobNo: user.phoneNumber,
+          profile: user.photoURL,
+        };
+        localStorage.setItem("currentUser", JSON.stringify(obj));
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  const logInWithEmailAndPassword = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await signInWithEmailAndPassword(
+        auth,
+        logUser.email,
+        logUser.password
+      );
+      const user = res.user;
+      console.log(user)
+      if (user && logUser) {
+        localStorage.setItem("accessToken", user.accessToken);
+        const obj = {
+          uid: user.uid,
+          name: user.displayName,
+          uid: user.uid,
+          email: user.email,
+          authProvider: "local",
+          mobNo: user.phoneNumber,
+          profile: user.photoURL,
+        };
+        localStorage.setItem("currentUser", JSON.stringify(obj));
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+  const onHandleChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    logUser[name] = value;
+    setLogUser({ ...logUser });
+  };
+
   return (
     <div className="row g-0">
       <div className="col-6 col-lg-6 login-left">
@@ -43,14 +125,26 @@ const Login = () => {
           </div>
         </div>
         <div className="form-login">
-          <form>
+          <form onSubmit={logInWithEmailAndPassword}>
             <div className="mb-3">
               <p className="body-black text-start">Email</p>
-              <input type="email" className="form-control" name="email" />
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={logUser.email}
+                onChange={onHandleChange}
+              />
             </div>
             <div>
               <p className="body-black text-start">Password</p>
-              <input type="text" className="form-control" name="password" />
+              <input
+                type="text"
+                className="form-control"
+                name="password"
+                value={logUser.password}
+                onChange={onHandleChange}
+              />
             </div>
 
             <p className="text-end link-text mb-4">Forgot Password?</p>
@@ -59,26 +153,33 @@ const Login = () => {
             </button>
           </form>
           <p className="py-4 text-center">OR</p>
-          <div className="form-control mb-3 text-center">
+          <button
+            className="form-control mb-3 text-center"
+            onClick={signInWithGoogle}
+          >
             <img
-              src={require("../../Assets/Images/Twitter.png")}
+              src={require("../../Assets/Images/google.png")}
               height={"25px"}
               alt="new"
               className="me-1"
             />
             Sign in using Google
-          </div>
-          <div className="form-control text-center">
+          </button>
+          <button className="form-control text-center">
             <img
-              src={require("../../Assets/Images/Twitter.png")}
+              src={require("../../Assets/Images/github.png")}
               height={"25px"}
               alt="new"
               className="me-1"
             />
-            Sign in using Twitter
-          </div>
+            Sign in using Github
+          </button>
           <p className="body-black text-center py-4">
-            Don’t have an account?<span className="link-text"> Sign up</span>
+            Don’t have an account?
+            <NavLink className="link-text" to={"/signup"}>
+              {" "}
+              Sign up
+            </NavLink>
           </p>
         </div>
       </div>

@@ -74,7 +74,7 @@ const Sidebar = () => {
             {!toggle && <div className="body-black">Dashboard</div>}
           </Link>
           <Link to="#" className="d-flex align-items-center dropdown mt-3">
-            <button className="dropbtn p-0 sidebar-drop">
+            <button className="dropbtn p-0 sidebar-drop" >
               <BiTask style={{ fontSize: "19px" }} className="me-3" />
               {!toggle && <div className="body-black">Forms</div>}
             </button>

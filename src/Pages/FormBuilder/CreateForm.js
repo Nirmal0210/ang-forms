@@ -10,7 +10,7 @@ const CreateForm = () => {
   const [toolItem, setToolItem] = useState();
 
   const handleStop = (e, item) => {
-    document.addEventListener("dragend", function (e) {
+    document.addEventListener("", function (e) {
       if (e.target.id === "dropDiv") {
         setCurrentFormData([...currentFormData, convertIntoHTML(item)]);
         setToolkitVisible(true);

@@ -32,9 +32,6 @@ const CreateForm = () => {
     // }
   };
   useEffect(() => {
-    console.log(currentFormData);
-  }, [currentFormData]);
-  useEffect(() => {
     // document.getElementById("mySidebar").style.width = "75px";
     document.getElementById("main").style.marginLeft = "0px";
   }, []);

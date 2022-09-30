@@ -1,13 +1,86 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import ActionPopup from "../../Components/ActionPopup";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { FcGoogle } from "react-icons/fc";
 import { IoExtensionPuzzle } from "react-icons/io5";
 import { BsFillPlusCircleFill, BsGithub } from "react-icons/bs";
 import { BiChevronRight, BiRefresh } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import ActionPopup from "../../Components/ActionPopup";
+import { db } from "../../firebase";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 const EditProfile = () => {
-  // let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser"))
+  );
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
+
+  const matchPassword = async () => {
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", currentUser.email)
+    );
+    const querySnapshot = await getDocs(q);
+    let userID = "";
+    querySnapshot.forEach((doc) => {
+      userID = doc.id;
+    });
+    const user = doc(db, "users", userID);
+    console.log(user.password)
+    if (user.password === oldPassword) {
+      if (newPassword === confirmPassword) {
+        return true;
+      } else {
+        alert("New Password doesn't match with ConfirmPassword");
+        return false;
+      }
+    } else {
+      alert("Old Password doesn't match with Registerd Password");
+      return false;
+    }
+  };
+  //Update User
+  const updateUser = async () => {
+    const validate = matchPassword();
+    if (validate) {
+      const q = query(
+        collection(db, "users"),
+        where("uid", "==", currentUser.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      let userID = "";
+      querySnapshot.forEach((doc) => {
+        userID = doc.id;
+      });
+      const user = doc(db, "users", userID);
+      await updateDoc(user, {
+        name: currentUser.name,
+        mobNo: currentUser.mobNo,
+        password: newPassword,
+      });
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      setIsUpdate(!isUpdate);
+    }
+  };
+  const onHandleChange = (e) => {
+    const title = e.target.name;
+    const value = e.target.value;
+    currentUser[title] = value;
+    setCurrentUser({ ...currentUser });
+  };
+  useEffect(() => {
+    setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
+  }, [isUpdate]);
+
   return (
     <div className="container extra-pad px-4">
       <div className="row">
@@ -17,7 +90,9 @@ const EditProfile = () => {
           </p>
         </div>
         <div className="col-6 d-flex justify-content-end">
-          <button className="publish-btn">Save</button>
+          <button className="publish-btn" onClick={() => updateUser()}>
+            Save
+          </button>
         </div>
       </div>
       <div className="mt-3">
@@ -64,6 +139,7 @@ const EditProfile = () => {
               </p>
               <div className="mt-2">
                 <img
+                  className="mask1"
                   src={require("../../Assets/Images/Response1.png")}
                   height={"90px"}
                   width={"90px"}
@@ -78,15 +154,9 @@ const EditProfile = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-control form-control-manual form-control-sm"
-                    />
-                  </div>
-                  <div className="mb-3 col-6">
-                    <label className="form-label mb-0 body-black">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
+                      value={currentUser?.name}
+                      onChange={onHandleChange}
+                      name="name"
                       className="form-control form-control-manual form-control-sm"
                     />
                   </div>
@@ -95,8 +165,10 @@ const EditProfile = () => {
                       Phone Number
                     </label>
                     <input
-                      type="tel"
-                      name="phone"
+                      type="text"
+                      value={currentUser?.mobNo}
+                      name="mobNo"
+                      onChange={onHandleChange}
                       className="form-control form-control-manual form-control-sm"
                     />
                   </div>
@@ -106,24 +178,9 @@ const EditProfile = () => {
                     </label>
                     <input
                       type="email"
-                      className="form-control form-control-manual form-control-sm"
-                    />
-                  </div>
-                  <div className="mb-3 col-6">
-                    <label className="form-label mb-0 body-black">
-                      Password
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control form-control-manual form-control-sm"
-                    />
-                  </div>
-                  <div className="mb-3 col-6">
-                    <label className="form-label mb-0 body-black">
-                      Confirm Password
-                    </label>
-                    <input
-                      type="text"
+                      value={currentUser?.email}
+                      name="email"
+                      readOnly
                       className="form-control form-control-manual form-control-sm"
                     />
                   </div>
@@ -135,18 +192,64 @@ const EditProfile = () => {
                 </p>
               </div>
               <div className="mt-2 d-flex align-items-center">
-                <div className="social-media-circle mx-1">
-                  <FcGoogle className="icon" />
-                </div>
-                <div className="social-media-circle mx-1">
-                  <BsGithub className="icon" />
-                </div>
+                {currentUser && currentUser.authProvider !== "google" && (
+                  <div className="social-media-circle mx-1">
+                    <FcGoogle className="icon" />
+                  </div>
+                )}
+                {currentUser && currentUser.authProvider !== "github" && (
+                  <div className="social-media-circle mx-1">
+                    <BsGithub className="icon" />
+                  </div>
+                )}
                 <div>
                   <p className="response subtitle-black mx-2">
                     Link more social accounts
                   </p>
                 </div>
               </div>
+              {currentUser && currentUser.authProvider === "local" && (
+                <div className="mt-3">
+                  <p className="body-large-black fw-bold text-start">
+                    Change Password
+                  </p>
+                  <div className="row">
+                    <div className="mb-3 col-6">
+                      <label className="form-label mb-0 body-black">
+                        Old Password
+                      </label>
+                      <input
+                        type="text"
+                        name="password"
+                        onChange={(e) => setOldPassword(e.target.value)}
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                    <div className="mb-3 col-6">
+                      <label className="form-label mb-0 body-black">
+                        New Password
+                      </label>
+                      <input
+                        type="text"
+                        name="newpassword"
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                    <div className="mb-3 col-6">
+                      <label className="form-label mb-0 body-black">
+                        Confirm Password
+                      </label>
+                      <input
+                        type="text"
+                        name="confirmPassword"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </TabPanel>
           <TabPanel>

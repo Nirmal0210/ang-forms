@@ -26,6 +26,3 @@ export { auth, db };
 //   }
 // };
 
-// const logout = () => {
-//   signOut(auth);
-// };

@@ -18,6 +18,12 @@ nav {
   background: #fff !important;
 }
 
+.spinner-border {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
 /* TABLE CSS */
 .tableFixHeadDash {
   table-layout: fixed;
@@ -832,6 +838,15 @@ nav {
 
 .tab-icon {
   font-size: 20px !important;
+}
+
+.mask1 {
+  -webkit-mask-image: url('../Images/pencil.jpg');
+  mask-image: url('../Images/pencil.jpg');
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 /*============ Tab 2 ==========*/

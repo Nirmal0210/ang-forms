@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { db, auth } from "../../firebase";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -11,6 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const [logUser, setLogUser] = useState({});
+  const [loader, setLoader] = useState(false);
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
@@ -49,32 +58,38 @@ const Login = () => {
 
   const logInWithEmailAndPassword = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
-      const res = await signInWithEmailAndPassword(
-        auth,
-        logUser.email,
-        logUser.password
+      const q = query(
+        collection(db, "users"),
+        where("email", "==", logUser.email)
       );
-      const user = res.user;
-      console.log(user)
-      if (user && logUser) {
+      const querySnapshot = await getDocs(q);
+      let userID = "";
+      querySnapshot.forEach((doc) => {
+        userID = doc.id;
+      });
+      const newUser = doc(db, "users", userID);
+      const docSnap = await getDoc(newUser);
+      if (docSnap.exists()) {
+        const res = await signInWithEmailAndPassword(
+          auth,
+          logUser.email,
+          logUser.password
+        );
+        const user = res.user;
         localStorage.setItem("accessToken", user.accessToken);
-        const obj = {
-          uid: user.uid,
-          name: user.displayName,
-          uid: user.uid,
-          email: user.email,
-          authProvider: "local",
-          mobNo: user.phoneNumber,
-          profile: user.photoURL,
-        };
-        localStorage.setItem("currentUser", JSON.stringify(obj));
+        localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
+        setLoader(false);
         navigate("/");
+      } else {
+        console.log("User does not exist");
       }
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
+    setLoader(false);
   };
   const onHandleChange = (e) => {
     let name = e.target.name;
@@ -149,7 +164,13 @@ const Login = () => {
 
             <p className="text-end link-text mb-4">Forgot Password?</p>
             <button type="submit" className="btn-login">
-              LOGIN
+              {!loader ? (
+                "LOGIN"
+              ) : (
+                <div className="spinner-border text-light" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              )}
             </button>
           </form>
           <p className="py-4 text-center">OR</p>

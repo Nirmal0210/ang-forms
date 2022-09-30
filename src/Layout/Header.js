@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BsArrowLeft, BsFillBellFill } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { auth } from "../firebase";
 import RandomBackground from "../Components/RandomBackground";
+import { auth } from "../firebase";
+
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [currentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser"))
+  );
+  const logout = () => {
+    auth.signOut();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand navbar-light">
       <div className="container-fluid">
@@ -42,7 +52,7 @@ const Header = () => {
 
             <li className="nav-item ms-3">
               <NavLink className="nav-link" href="#">
-                <BsFillBellFill onClick={() => auth.signOut()} />
+                <BsFillBellFill />
               </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center ms-3">
@@ -54,7 +64,7 @@ const Header = () => {
               <NavLink className="nav-link" href="#" aria-disabled="true">
                 <p className="body-large-black">{currentUser.name}</p>
               </NavLink>
-              <MdOutlineKeyboardArrowDown />
+              <MdOutlineKeyboardArrowDown onClick={() => logout()} />
             </li>
           </ul>
         </div>

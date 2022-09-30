@@ -13,7 +13,7 @@ const Signup = () => {
   const [logUser, setLogUser] = useState({});
   const [agree, setAgree] = useState(false);
   const [toggle, setToggle] = useState(true);
-
+  const [loader, setLoader] = useState(false);
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
@@ -50,42 +50,48 @@ const Signup = () => {
   };
   const registerWithEmailAndPassword = async (e) => {
     e.preventDefault();
-    try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        logUser.email,
-        logUser.password
-      );
-      const user = res.user;
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        mobNo: logUser.mobNo,
-        authProvider: "local",
-        email: logUser.email,
-        password: logUser.password,
-        profile: user.photoURL,
-      });
-      if (user && logUser) {
-        localStorage.setItem("accessToken", user.accessToken);
-        const obj = {
+    if (logUser.password === logUser.confirmPassword) {
+      setLoader(true);
+      try {
+        const res = await createUserWithEmailAndPassword(
+          auth,
+          logUser.email,
+          logUser.password
+        );
+        const user = res.user;
+        await addDoc(collection(db, "users"), {
           uid: user.uid,
-          name: user.displayName,
+          name: logUser.name,
           mobNo: logUser.mobNo,
           authProvider: "local",
           email: logUser.email,
           password: logUser.password,
           profile: user.photoURL,
-        };
-        localStorage.setItem("currentUser", JSON.stringify(obj));
-        navigate("/");
+        });
+        if (user && logUser) {
+          localStorage.setItem("accessToken", user.accessToken);
+          const obj = {
+            uid: user.uid,
+            name: logUser.name,
+            mobNo: logUser.mobNo,
+            authProvider: "local",
+            email: logUser.email,
+            password: logUser.password,
+            profile: user.photoURL,
+          };
+          localStorage.setItem("currentUser", JSON.stringify(obj));
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err.message);
+        console.error(err);
       }
-    } catch (err) {
-      console.log(err.message);
-      console.error(err);
+      setLogUser({});
+      setAgree(false);
+      setLoader(false);
+    } else {
+      alert("Password and Confirm password mismatched");
     }
-    setLogUser({});
-    setAgree(false);
   };
   const onHandleChange = (e) => {
     let title = e.target.name;
@@ -183,7 +189,7 @@ const Signup = () => {
           <div className="mt-2 px-5">
             <form className="row g-1" onSubmit={registerWithEmailAndPassword}>
               <div className="mb-3 col-6">
-                <label className="form-label mb-0 body-black">First Name</label>
+                <label className="form-label mb-0 body-black">Name</label>
                 <input
                   type="text"
                   className="form-control form-control-md"
@@ -245,13 +251,19 @@ const Signup = () => {
                   onChange={(e) => setAgree(e.target.checked)}
                   id="exampleCheck1"
                 />
-                <label className="form-check-label" for="exampleCheck1">
+                <label className="form-check-label" htmlFor="exampleCheck1">
                   I agree to all the Terms & Privacy Policy
                 </label>
               </div>
               <div className="d-flex justify-content-center mt-2">
                 <button type="submit" className="btn-signup">
-                  Register
+                  {!loader ? (
+                    "Register"
+                  ) : (
+                    <div className="spinner-border text-light" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  )}
                 </button>
               </div>
             </form>

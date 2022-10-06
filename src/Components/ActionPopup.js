@@ -1,22 +1,19 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import { BsFillEyeFill, BsThreeDots } from "react-icons/bs";
-import { HiPencil } from "react-icons/hi";
-import { IoMdSettings, IoMdTrash } from "react-icons/io";
 const ActionPopup = () => {
   return (
     <div>
       <Popup
         trigger={
           <button className="bg-white border-0">
-            <BsThreeDots />
+            <i className="bi bi-three-dots"></i>
           </button>
         }
         position="left center"
       >
         {() => (
           <div>
-            <div className="d-flex align-items-center popup-hover">
+            {/* <div className="d-flex align-items-center popup-hover">
               <span className="mx-2">
                 <BsFillEyeFill />
               </span>
@@ -40,7 +37,7 @@ const ActionPopup = () => {
                 <IoMdTrash />
               </span>
               <p style={{ color: "red", fontSize: "14px" }}>Delete</p>
-            </div>
+            </div> */}
           </div>
         )}
       </Popup>

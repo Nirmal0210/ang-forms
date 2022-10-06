@@ -63,7 +63,6 @@ const RandomBackground = ({ pUrl, pName, pClass }) => {
 
   return (
     <>
-      {console.log(baseStyle.small)}
       <div>
         {url ? (
           <img

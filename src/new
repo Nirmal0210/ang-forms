@@ -1,0 +1,12 @@
+App Name:
+App Key
+
+Question for what you want to create app
+Two option :
+1. Mob App
+2.Website
+
+If(mob)
+Input : Enter package Id of mob app
+if(webiste)
+link : of website

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { BsArrowLeft, BsFillBellFill } from "react-icons/bs";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import RandomBackground from "../Components/RandomBackground";
 import { auth } from "../firebase";
 
@@ -27,7 +25,10 @@ const Header = () => {
             onClick={() => navigate(-1)}
           >
             <div className="response">
-              <BsArrowLeft style={{ fontSize: "20px !important" }} />
+              <i
+                className="bi bi-arrow-left"
+                style={{ fontSize: "20px !important" }}
+              ></i>
             </div>
             <div className="ms-2">
               <p className="body-large-black response">Back to last page</p>
@@ -52,7 +53,7 @@ const Header = () => {
 
             <li className="nav-item ms-3">
               <NavLink className="nav-link" href="#">
-                <BsFillBellFill />
+                <i className="bi bi-bell-fill"></i>
               </NavLink>
             </li>
             <li className="nav-item d-flex align-items-center ms-3">
@@ -64,7 +65,7 @@ const Header = () => {
               <NavLink className="nav-link" href="#" aria-disabled="true">
                 <p className="body-large-black">{currentUser.name}</p>
               </NavLink>
-              <MdOutlineKeyboardArrowDown onClick={() => logout()} />
+              <i className="bi bi-chevron-down" onClick={() => logout()}></i>
             </li>
           </ul>
         </div>

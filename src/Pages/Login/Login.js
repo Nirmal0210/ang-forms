@@ -25,30 +25,44 @@ const Login = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
+      const q = query(
+        collection(db, "users"),
+        where("email", "==", user.email)
+      );
       const docs = await getDocs(q);
-      if (docs.docs.length === 0) {
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: user.displayName,
-          authProvider: "google",
-          email: user.email,
-          profile: user.photoURL,
-        });
-      }
-      if (user) {
+      let userID = "";
+      docs.forEach((doc) => {
+        userID = doc.id;
+      });
+      const newUser = doc(db, "users", userID);
+      const docSnap = await getDoc(newUser);
+      if (docSnap.exists()) {
         localStorage.setItem("accessToken", user.accessToken);
-        const obj = {
-          uid: user.uid,
-          name: user.displayName,
-          uid: user.uid,
-          email: user.email,
-          authProvider: "google",
-          mobNo: user.phoneNumber,
-          profile: user.photoURL,
-        };
-        localStorage.setItem("currentUser", JSON.stringify(obj));
+        localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
         navigate("/");
+      } else {
+        if (docs.docs.length === 0) {
+          await addDoc(collection(db, "users"), {
+            uid: user.uid,
+            name: user.displayName,
+            authProvider: "google",
+            email: user.email,
+            profile: user.photoURL,
+          });
+        }
+        if (user) {
+          localStorage.setItem("accessToken", user.accessToken);
+          const obj = {
+            uid: user.uid,
+            name: user.displayName,
+            mobNo: user.phoneNumber,
+            authProvider: "google",
+            email: user.email,
+            profile: user.photoURL,
+          };
+          localStorage.setItem("currentUser", JSON.stringify(obj));
+          navigate("/");
+        }
       }
     } catch (err) {
       console.error(err);

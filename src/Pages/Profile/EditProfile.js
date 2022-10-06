@@ -35,7 +35,7 @@ const EditProfile = () => {
       userID = doc.id;
     });
     const user = doc(db, "users", userID);
-    console.log(user.password)
+    console.log(user.password);
     if (user.password === oldPassword) {
       if (newPassword === confirmPassword) {
         return true;
@@ -50,26 +50,27 @@ const EditProfile = () => {
   };
   //Update User
   const updateUser = async () => {
-    const validate = matchPassword();
-    if (validate) {
-      const q = query(
-        collection(db, "users"),
-        where("uid", "==", currentUser.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      let userID = "";
-      querySnapshot.forEach((doc) => {
-        userID = doc.id;
-      });
-      const user = doc(db, "users", userID);
-      await updateDoc(user, {
-        name: currentUser.name,
-        mobNo: currentUser.mobNo,
-        password: newPassword,
-      });
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      setIsUpdate(!isUpdate);
-    }
+    // const validate = matchPassword();
+    // if (validate) {
+      
+    const q = query(
+      collection(db, "users"),
+      where("uid", "==", currentUser.uid)
+    );
+    const querySnapshot = await getDocs(q);
+    let userID = "";
+    querySnapshot.forEach((doc) => {
+      userID = doc.id;
+    });
+    const user = doc(db, "users", userID);
+    await updateDoc(user, {
+      name: currentUser.name,
+      mobNo: currentUser.mobNo,
+      // password: newPassword,
+    });
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    setIsUpdate(!isUpdate);
+    //  }
   };
   const onHandleChange = (e) => {
     const title = e.target.name;
@@ -140,7 +141,7 @@ const EditProfile = () => {
               <div className="mt-2">
                 <img
                   className="mask1"
-                  src={require("../../Assets/Images/Response1.png")}
+                  src={currentUser.profile}
                   height={"90px"}
                   width={"90px"}
                   alt="response"

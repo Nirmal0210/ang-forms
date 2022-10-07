@@ -46,7 +46,7 @@ const Sidebar = () => {
         </div>
         <div className="d-flex justify-content-center">
           <button
-            onClick={() => navigate("/createform")}
+            onClick={() => navigate("/formdialog")}
             className={`${!toggle ? "sidebar-btn" : "sidebar-btn-collapse"}`}
           >
             {!toggle ? (

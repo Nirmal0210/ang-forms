@@ -477,8 +477,8 @@ nav {
 
 .fb-bg-circle {
   background-color: rgba(35, 116, 171, 0.1);
-  height: 400px;
-  width: 400px;
+  height: 350px;
+  width: 350px;
   border-radius: 50%;
 }
 
@@ -590,6 +590,15 @@ nav {
   border-radius: 3px;
 }
 
+.button-pencil {
+  background-color: #2374AB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 2px 7px;
+  margin-left: 5px
+}
+
 /* Formio End */
 /* ====================================== */
 /* ========= Form Builder End ========= */
@@ -618,6 +627,7 @@ nav {
   transition: background-color 0.3s;
   border-radius: 3px;
 }
+
 .fb-bg-circle1 {
   background-color: rgba(35, 116, 171, 0.1);
   height: 300px;
@@ -1035,4 +1045,45 @@ nav {
 
 #cancelBtn {
   background-color: crimson;
+}
+
+
+/* ======================= */
+/* ======== Alert ======== */
+/* ======================= */
+
+.alert {
+  animation-name: example;
+  animation-duration: 2s;
+}
+
+@keyframes example {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
+/*=============================*/
+/* ======= Action Popup ====== */
+/*=============================*/
+.confirmClosebtn {
+  border: none;
+  border-radius: 5px;
+  color: #2374AB;
+  padding: 5px;
+  width: 80px;
+}
+
+.delBtn {
+  border: none;
+  border-radius: 5px;
+  background: #2374AB;
+  color: white;
+  padding: 5px;
+  width: 80px;
 }

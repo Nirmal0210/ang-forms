@@ -18,6 +18,7 @@ import { AuthProvider } from "../AuthContext";
 import { auth } from "../firebase";
 import PrivateRoute from "../PrivateRoute";
 import { Navigate } from "react-router-dom";
+import FormDialog from "../Pages/FormBuilder/FormDialog";
 
 const RouterLayout = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -48,6 +49,15 @@ const RouterLayout = () => {
           exact
           path="/signup"
           element={!currentUser ? <Signup /> : <Navigate to={"/"} replace />}
+        />
+        <Route
+          exact
+          path="/formdialog"
+          element={
+            <PrivateRoute>
+              <FormDialog />
+            </PrivateRoute>
+          }
         />
         <Route
           exact

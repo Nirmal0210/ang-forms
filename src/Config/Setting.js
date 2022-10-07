@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
 export const APP_BASE_URL = "flsadlfjlsa";
 
 export const convertIntoHTML = (item) => {
@@ -7,7 +5,19 @@ export const convertIntoHTML = (item) => {
   if (item.id === "singleline") {
     obj.element = <hr />;
   } else if (item.id === "textfield") {
-    obj.element = <input type="text" />;
+    obj.element = (
+      <div className="mb-3">
+        <label className="form-label text-start">
+          Enter Value
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="name@example.com"
+        />
+      </div>
+    );
   } else if (item.id === "table") {
     obj.element = (
       <table className="table">

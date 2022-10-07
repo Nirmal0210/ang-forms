@@ -34,9 +34,9 @@ const Login = () => {
       docs.forEach((doc) => {
         userID = doc.id;
       });
-      const newUser = doc(db, "users", userID);
-      const docSnap = await getDoc(newUser);
-      if (docSnap.exists()) {
+      if (userID) {
+        const newUser = doc(db, "users", userID);
+        const docSnap = await getDoc(newUser);
         localStorage.setItem("accessToken", user.accessToken);
         localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
         navigate("/");

@@ -20,11 +20,11 @@ function App() {
             <RouterLayout />
           </div>
         </>
-      ) : (location.pathname == "/login" ? (
+      ) : location.pathname == "/login" ? (
         <Login />
       ) : (
         <Signup />
-      ))}
+      )}
     </>
   );
 }

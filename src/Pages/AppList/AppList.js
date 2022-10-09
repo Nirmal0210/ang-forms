@@ -55,7 +55,6 @@ const AppList = () => {
     await setDoc(doc(collection(db, `users/${userID}/apps`)), docData)
       .then(() => {
         setModalShow(false);
-
         setIsSuccessful(true);
         setTimeout(() => {
           setIsSuccessful(false);
@@ -64,7 +63,6 @@ const AppList = () => {
       })
       .catch((error) => {
         setModalShow(false);
-
         setIsError(true);
         setTimeout(() => {
           setIsError(false);
@@ -74,8 +72,11 @@ const AppList = () => {
   const getData = async () => {
     setLoader(true);
     setAppList([]);
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
+    let documentID = localStorage.getItem("documentID");
+    const querySnapshotTemp = await getDocs(
+      collection(db, `users/${documentID}/apps`)
+    );
+    querySnapshotTemp.forEach((doc) => {
       let obj = doc.data();
       obj.appKey = doc.id;
       appList.push(obj);
@@ -207,7 +208,7 @@ const AppList = () => {
         {isError && (
           <div>
             <div
-              class="alert alert-danger d-flex align-items-center"
+              className="alert alert-danger d-flex align-items-center"
               role="alert"
             >
               <i className="bi bi-exclamation-circle-free"></i>

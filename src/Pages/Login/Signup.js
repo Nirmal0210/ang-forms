@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { db, auth } from "../../firebase";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
+import { getUserId } from "../../Config/Setting";
 const Signup = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
@@ -19,30 +20,31 @@ const Signup = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      const docs = await getDocs(q);
-      if (docs.docs.length === 0) {
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: user.displayName,
-          authProvider: "google",
-          email: user.email,
-          profile: user.photoURL,
-        });
-      }
-      if (user) {
-        localStorage.setItem("accessToken", user.accessToken);
-        const obj = {
-          uid: user.uid,
-          name: user.displayName,
-          mobNo: user.phoneNumber,
-          authProvider: "google",
-          email: user.email,
-          profile: user.photoURL,
-        };
-        localStorage.setItem("currentUser", JSON.stringify(obj));
-        navigate("/");
-      }
+      getUserId(user).then(async (docs, userID) => {
+        localStorage.setItem("documentID", userID);
+        if (docs.docs.length === 0) {
+          await addDoc(collection(db, "users"), {
+            uid: user.uid,
+            name: user.displayName,
+            authProvider: "google",
+            email: user.email,
+            profile: user.photoURL,
+          });
+        }
+        if (user) {
+          localStorage.setItem("accessToken", user.accessToken);
+          const obj = {
+            uid: user.uid,
+            name: user.displayName,
+            mobNo: user.phoneNumber,
+            authProvider: "google",
+            email: user.email,
+            profile: user.photoURL,
+          };
+          localStorage.setItem("currentUser", JSON.stringify(obj));
+          navigate("/");
+        }
+      });
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -69,6 +71,8 @@ const Signup = () => {
           profile: user.photoURL,
         });
         if (user && logUser) {
+          let userID = getUserId(user);
+          localStorage.setItem("documentID", userID);
           localStorage.setItem("accessToken", user.accessToken);
           const obj = {
             uid: user.uid,
@@ -251,7 +255,7 @@ const Signup = () => {
                   onChange={(e) => setAgree(e.target.checked)}
                   id="exampleCheck1"
                 />
-                <label className="form-check-label" htmlFor="exampleCheck1">
+                <label className="form-check-label" htmlhtmlFor="exampleCheck1">
                   I agree to all the Terms & Privacy Policy
                 </label>
               </div>

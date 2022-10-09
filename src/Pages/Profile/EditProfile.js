@@ -265,56 +265,56 @@ const EditProfile = () => {
                 <div className="col-6 col-lg-6">
                   <div className="subscription-box">
                     <p className="fw-bold mb-3">Plan Benefits</p>
-                    <div class="form-check checkbox-circle-one mb-3">
-                      <label class="form-check-label body-black fw-bold">
+                    <div className="form-check checkbox-circle-one mb-3">
+                      <label className="form-check-label body-black fw-bold">
                         Benefit 1
                       </label>
                       <input
-                        class="form-check-input check-input-one"
+                        className="form-check-input check-input-one"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
                     </div>
-                    <div class="form-check checkbox-circle-one mb-3">
-                      <label class="form-check-label body-black fw-bold">
+                    <div className="form-check checkbox-circle-one mb-3">
+                      <label className="form-check-label body-black fw-bold">
                         Benefit 2
                       </label>
                       <input
-                        class="form-check-input check-input-one"
+                        className="form-check-input check-input-one"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
                     </div>
-                    <div class="form-check checkbox-circle-one mb-3">
-                      <label class="form-check-label body-black fw-bold">
+                    <div className="form-check checkbox-circle-one mb-3">
+                      <label className="form-check-label body-black fw-bold">
                         Benefit 3
                       </label>
                       <input
-                        class="form-check-input check-input-one"
+                        className="form-check-input check-input-one"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
                     </div>
-                    <div class="form-check checkbox-circle-one mb-3">
-                      <label class="form-check-label body-black fw-bold">
+                    <div className="form-check checkbox-circle-one mb-3">
+                      <label className="form-check-label body-black fw-bold">
                         Benefit 4
                       </label>
                       <input
-                        class="form-check-input check-input-one"
+                        className="form-check-input check-input-one"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
                       />
                     </div>
-                    <div class="form-check checkbox-circle-one mb-3">
-                      <label class="form-check-label body-black fw-bold">
+                    <div className="form-check checkbox-circle-one mb-3">
+                      <label className="form-check-label body-black fw-bold">
                         Benefit 5
                       </label>
                       <input
-                        class="form-check-input check-input-one"
+                        className="form-check-input check-input-one"
                         type="checkbox"
                         value=""
                         id="flexCheckDefault"
@@ -325,9 +325,9 @@ const EditProfile = () => {
                 <div className="col-6 col-lg-6">
                   <div className="subscription-box">
                     <div className="form-check-box mb-3">
-                      <div class="form-check d-flex align-items-center">
+                      <div className="form-check d-flex align-items-center">
                         <input
-                          class="form-check-input p-2"
+                          className="form-check-input p-2"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault2"
@@ -335,8 +335,8 @@ const EditProfile = () => {
                         />
                         <div className="mx-3">
                           <label
-                            class="form-check-label w-100"
-                            for="flexRadioDefault2"
+                            className="form-check-label w-100"
+                            htmlFor="flexRadioDefault2"
                           >
                             Basic
                           </label>
@@ -359,9 +359,9 @@ const EditProfile = () => {
                       </div>
                     </div>
                     <div className="form-check-box mb-3">
-                      <div class="form-check d-flex align-items-center">
+                      <div className="form-check d-flex align-items-center">
                         <input
-                          class="form-check-input p-2"
+                          className="form-check-input p-2"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault2"
@@ -369,8 +369,8 @@ const EditProfile = () => {
                         />
                         <div className="mx-3">
                           <label
-                            class="form-check-label w-100"
-                            for="flexRadioDefault2"
+                            className="form-check-label w-100"
+                            htmlFor="flexRadioDefault2"
                           >
                             Basic
                           </label>
@@ -393,9 +393,9 @@ const EditProfile = () => {
                       </div>
                     </div>
                     <div className="form-check-box mb-3">
-                      <div class="form-check d-flex align-items-center">
+                      <div className="form-check d-flex align-items-center">
                         <input
-                          class="form-check-input p-2"
+                          className="form-check-input p-2"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault2"
@@ -403,8 +403,8 @@ const EditProfile = () => {
                         />
                         <div className="mx-3">
                           <label
-                            class="form-check-label w-100"
-                            for="flexRadioDefault2"
+                            className="form-check-label w-100"
+                            htmlFor="flexRadioDefault2"
                           >
                             Basic
                           </label>

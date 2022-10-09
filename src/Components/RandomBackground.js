@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const RandomBackground = ({ pUrl, pName, pClass }) => {
   const url = pUrl ? pUrl : null;
-  const [name, setName] = useState("");
+  const [name, setName] = useState(pName);
   const [baseStyle, setBaseStyle] = useState({
     small: {
       borderRadius: "50%",
@@ -46,14 +46,11 @@ const RandomBackground = ({ pUrl, pName, pClass }) => {
           return { ...current, small };
         });
       }
-
-      if (pName) {
-        const myArray = pName.split(" ");
-        if (myArray.length > 1)
-          setName(myArray[0].charAt(0) + myArray[1].charAt(0));
-        else {
-          setName(myArray[0].charAt(0));
-        }
+      let myArray = pName?.split(" ");
+      if (myArray.length > 1)
+        setName(myArray[0].charAt(0) + myArray[1].charAt(0));
+      else {
+        setName(myArray[0].charAt(0));
       }
     }
   };
@@ -61,31 +58,23 @@ const RandomBackground = ({ pUrl, pName, pClass }) => {
     changeBG();
   }, [name]);
 
-  return (
-    <>
-      <div>
-        {url ? (
-          <img
-            src={url ? url : require("../Assets/Images/user-icon.png")}
-            style={pClass === "small" ? baseStyle.small : baseStyle.large}
-            alt="dynamic"
-          />
+  return url ? (
+    <img
+      src={url ? url : require("../Assets/Images/user-icon.png")}
+      style={pClass === "small" ? baseStyle.small : baseStyle.large}
+      alt="dynamic"
+      referrerPolicy="no-referrer"
+    />
+  ) : (
+    <div>
+      <div style={pClass == "small" ? baseStyle.small : baseStyle.large}>
+        {name ? (
+          name
         ) : (
-          <div>
-            <div style={pClass === "small" ? baseStyle.small : baseStyle.large}>
-              {name ? (
-                name
-              ) : (
-                <img
-                  src={require("../Assets/Images/user-icon.png")}
-                  alt="dynamic"
-                />
-              )}
-            </div>
-          </div>
+          <img src={require("../Assets/Images/user-icon.png")} alt="dynamic" />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

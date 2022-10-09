@@ -55,7 +55,7 @@ const FormDialog = () => {
                 id="flexRadioDefault1"
                 onChange={() => setCheckedValue("appWebsiteForm")}
               />
-              <label className="form-check-label" for="flexRadioDefault1">
+              <label className="form-check-label" htmlFor="flexRadioDefault1">
                 App / Website Form
               </label>
             </div>
@@ -68,7 +68,7 @@ const FormDialog = () => {
                 id="flexRadioDefault2"
                 onChange={() => setCheckedValue("publishableForm")}
               />
-              <label className="form-check-label" for="flexRadioDefault2">
+              <label className="form-check-label" htmlFor="flexRadioDefault2">
                 Publishable Form Link
               </label>
             </div>
@@ -83,10 +83,13 @@ const FormDialog = () => {
                   className="form-select"
                   aria-label="Default select example"
                 >
-                  <option selected>Select App / Website</option>
+                  <option defaultValue={0}>Select App / Website</option>
                   {appList.length > 0 &&
-                    appList.map((item) => (
-                      <option value={item.appKey + " " + item.appName}>
+                    appList.map((item, index) => (
+                      <option
+                        value={item.appKey + " " + item.appName}
+                        key={index}
+                      >
                         {item.appKey}
                       </option>
                     ))}
@@ -98,7 +101,9 @@ const FormDialog = () => {
             <button
               className="download-btn"
               onClick={() =>
-                navigate("/createform", { state: { appKey, appName,checkedValue } })
+                navigate("/createform", {
+                  state: { appKey, appName, checkedValue },
+                })
               }
             >
               Continue

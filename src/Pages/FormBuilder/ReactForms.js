@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div className="extra-pad px-2">
       <div>
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
             type="text"
             className="form-control border-0"

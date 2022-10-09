@@ -1,15 +1,16 @@
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase";
+
 export const APP_BASE_URL = "flsadlfjlsa";
 
-export const convertIntoHTML = (item) => {
+export const convertElement = (item) => {
   let obj = {};
   if (item.id === "singleline") {
     obj.element = <hr />;
   } else if (item.id === "textfield") {
     obj.element = (
       <div className="mb-3">
-        <label className="form-label text-start">
-          Enter Value
-        </label>
+        <label className="form-label text-start">Enter Value</label>
         <input
           type="text"
           className="form-control"
@@ -55,4 +56,17 @@ export const convertIntoHTML = (item) => {
     obj.element = <input type="date"></input>;
   }
   return obj;
+};
+
+export const getUserId = async (user) => {
+  let q = query(collection(db, "users"), where("email", "==", user.email));
+  let docs = await getDocs(q);
+  let userID = "";
+  docs?.forEach((doc) => {
+    userID = doc.id;
+  });
+  if (userID) {
+    localStorage.setItem("documentID", userID);
+  }
+  return { userID, docs };
 };

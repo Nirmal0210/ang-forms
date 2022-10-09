@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { db, auth } from "../../firebase";
-import {
-  addDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { getUserId } from "../../Config/Setting";
 const Login = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
@@ -25,15 +18,7 @@ const Login = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      const q = query(
-        collection(db, "users"),
-        where("email", "==", user.email)
-      );
-      const docs = await getDocs(q);
-      let userID = "";
-      docs.forEach((doc) => {
-        userID = doc.id;
-      });
+      let { userID, docs } = getUserId(user);
       if (userID) {
         const newUser = doc(db, "users", userID);
         const docSnap = await getDoc(newUser);
@@ -41,7 +26,7 @@ const Login = () => {
         localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
         navigate("/");
       } else {
-        if (docs.docs.length === 0) {
+        if (docs?.docs.length === 0) {
           await addDoc(collection(db, "users"), {
             uid: user.uid,
             name: user.displayName,
@@ -74,31 +59,16 @@ const Login = () => {
     e.preventDefault();
     setLoader(true);
     try {
-      const q = query(
-        collection(db, "users"),
-        where("email", "==", logUser.email)
+      let { userData } = getUserId(logUser);
+      const res = await signInWithEmailAndPassword(
+        auth,
+        logUser.email,
+        logUser.password
       );
-      const querySnapshot = await getDocs(q);
-      let userID = "";
-      querySnapshot.forEach((doc) => {
-        userID = doc.id;
-      });
-      const newUser = doc(db, "users", userID);
-      const docSnap = await getDoc(newUser);
-      if (docSnap.exists()) {
-        const res = await signInWithEmailAndPassword(
-          auth,
-          logUser.email,
-          logUser.password
-        );
-        const user = res.user;
-        localStorage.setItem("accessToken", user.accessToken);
-        localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
-        setLoader(false);
-        navigate("/");
-      } else {
-        console.log("User does not exist");
-      }
+      const user = res.user;
+      localStorage.setItem("accessToken", user.accessToken);
+      setLoader(false);
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert(err.message);

@@ -21,7 +21,7 @@ const Signup = () => {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
       getUserId(user).then(async (docs, userID) => {
-        localStorage.setItem("documentID", userID);
+        localStorage.setItem("userDocumentID", userID);
         if (docs.docs.length === 0) {
           await addDoc(collection(db, "users"), {
             uid: user.uid,
@@ -72,7 +72,7 @@ const Signup = () => {
         });
         if (user && logUser) {
           let userID = getUserId(user);
-          localStorage.setItem("documentID", userID);
+          localStorage.setItem("userDocumentID", userID);
           localStorage.setItem("accessToken", user.accessToken);
           const obj = {
             uid: user.uid,

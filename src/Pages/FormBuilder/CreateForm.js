@@ -2,23 +2,15 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
-import {
-  convertElement,
-  convertIntoHTML,
-  getUserId,
-} from "../../Config/Setting";
+import { convertElement } from "../../Config/Setting";
 import { db } from "../../firebase";
 import { elementType } from "./Consts";
-import {
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import PropertyConfiguration from "./PropertyConfiguration";
 const CreateForm = () => {
   const [formName, setFormName] = useState("Form1");
+  const [url, setUrl] = useState("");
+  const [toggle, setToggle] = useState(false);
   const [currentFormData, setCurrentFormData] = useState([]);
   const [toolkitVisible, setToolkitVisible] = useState(false);
   const [toolItem, setToolItem] = useState();
@@ -44,33 +36,41 @@ const CreateForm = () => {
     // });
   };
 
-  const handleDrag = (e, item) => {};
+  // const handleDrag = (e, item) => {};
 
   const removeItem = (i) => {
     const data = currentFormData.filter((item, index) => index !== i);
     setCurrentFormData(data);
   };
   const publishForm = async () => {
-    let docData = {};
-    let userID = localStorage.getItem("documentID");
+    let userID = localStorage.getItem("userDocumentID");
     if (userID) {
       if (checkedValue === "publishableForm") {
-        const queryTemp = await getDocs(
-          collection(db, "users/" + userID + "/publish")
-        );
-        queryTemp.forEach(async (document) => {
-          console.log(document.id, document.data());
-          if (document.id === appKey) {
-            const getData = doc(
-              db,
-              "users/" + userID + "/publish/",
-              document.id
-            );
-            await updateDoc(getData, {
-              ["formData"]: JSON.stringify(currentFormData),
-            });
-          }
+        let docRef = doc(collection(db, `users/${userID}/publish`));
+        await setDoc(docRef, {
+          formJSON: JSON.stringify(currentFormData[0]),
         });
+        const getData = doc(db, `users/${userID}/publish/${docRef.id}`);
+        await updateDoc(getData, {
+          formId: docRef.id,
+          uId: currentUser.uid,
+          impressions: 0,
+          responses: 0,
+          formName: formName,
+          formUrl: `http://localhost:3000/users/${userID}/publish/${docRef.id}`,
+        })
+          .then(() => {
+            setUrl(
+              `http://localhost:3000/users/${userID}/publish/${docRef.id}`
+            );
+            setIsSuccessful(true);
+          })
+          .catch(() => {
+            setIsError(true);
+            setTimeout(() => {
+              setIsError(false);
+            }, 2000);
+          });
       } else {
         let docRef = doc(
           collection(db, `users/${userID}/apps/${appKey}/forms`)
@@ -83,17 +83,22 @@ const CreateForm = () => {
           `users/${userID}/apps/${appKey}/forms/${docRef.id}`
         );
         await updateDoc(getData, {
-          docId: docRef.id,
+          formId: docRef.id,
           uId: currentUser.uid,
           appId: appKey,
+          formName: formName,
+          appName: appName,
+          impressions: 0,
+          responses: 0,
+          formUrl: `http://localhost:3000/users/${userID}/apps/${appKey}/forms/${docRef.id}`,
         })
           .then(() => {
+            setUrl(
+              `http://localhost:3000/users/${userID}/apps/${appKey}/forms/${docRef.id}`
+            );
             setIsSuccessful(true);
-            setTimeout(() => {
-              setIsSuccessful(false);
-            }, 2000);
           })
-          .catch((error) => {
+          .catch(() => {
             setIsError(true);
             setTimeout(() => {
               setIsError(false);
@@ -108,6 +113,58 @@ const CreateForm = () => {
 
   return (
     <div className="row pt-5 g-0">
+      {isSuccessful && (
+        <div
+          className="alert alert-success d-flex justify-content-between"
+          role="alert"
+        >
+          <div className=" d-flex align-items-center">
+            <i
+              className="bi bi-check-circle-fill"
+              style={{ fontSize: "35px" }}
+            ></i>
+            <div className="ms-3">
+              <div>Thank You 😄!</div>
+              <div>Form Published Successfully !!!</div>
+              <div>
+                {url ? url : "Not found"}
+                <span className="ms-3">
+                  <button
+                    className="btn rounded bg-white"
+                    onClick={() => {
+                      setToggle(true);
+                      navigator.clipboard.writeText(url);
+                    }}
+                  >
+                    {!toggle ? (
+                      <>
+                        Copy Link <i className="bi bi-clipboard ms-1"></i>
+                      </>
+                    ) : (
+                      "Copied !"
+                    )}
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <i
+            className="bi bi-x-lg text-end"
+            onClick={() => setIsSuccessful(false)}
+          ></i>
+        </div>
+      )}
+      {isError && (
+        <div>
+          <div
+            className="alert alert-danger d-flex align-items-center"
+            role="alert"
+          >
+            <i className="bi bi-exclamation-circle-free"></i>
+            <div>Oops !! Something went wrong !!</div>
+          </div>
+        </div>
+      )}
       {/* <div className="subtitle-black fw-bold">Layout elements</div> */}
       {/* <div className="subtitle-black fw-bold">Text elements</div> */}
       {/* <div className="subtitle-black fw-bold">Date elements</div> */}
@@ -187,7 +244,7 @@ const CreateForm = () => {
           <div className="col-3 d-flex justify-content-center">
             <button
               className="publish-btn btn"
-              disabled={!currentFormData.length > 0}
+              disabled={currentFormData.length < 1}
               type="button"
               onClick={() => publishForm()}
             >

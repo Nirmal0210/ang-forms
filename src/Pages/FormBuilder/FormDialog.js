@@ -16,6 +16,23 @@ const FormDialog = () => {
     setAppKey(temp[0]);
     setAppName(temp[1]);
   };
+
+  const goToPage = () => {
+    if (checkedValue === "appWebsiteForm") {
+      if (appKey) {
+        navigate("/createform", {
+          state: { appKey, appName, checkedValue },
+        });
+      } else {
+        alert("Select Atleast One App");
+      }
+    } else {
+      navigate("/createform", {
+        state: { checkedValue },
+      });
+    }
+  };
+
   const getData = async () => {
     setAppList([]);
     const q = query(
@@ -98,14 +115,7 @@ const FormDialog = () => {
             </div>
           )}
           <div className="d-flex justify-content-center">
-            <button
-              className="download-btn"
-              onClick={() =>
-                navigate("/createform", {
-                  state: { appKey, appName, checkedValue },
-                })
-              }
-            >
+            <button className="download-btn" onClick={() => goToPage()}>
               Continue
             </button>
           </div>

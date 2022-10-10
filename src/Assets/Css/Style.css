@@ -18,6 +18,13 @@ nav {
   background: #fff !important;
 }
 
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
+}
+
 .spinner-border {
   margin: auto;
   display: flex;
@@ -45,7 +52,6 @@ nav {
 .tableFixHeadDash td {
   width: 150px;
   text-align: start;
-  border: none;
 }
 
 .tableFixHead {
@@ -65,9 +71,8 @@ nav {
 
 .tableFixHead th,
 .tableFixHead td {
-  width: 200px;
+  width: 200px !important;
   text-align: start;
-  border: none;
 }
 
 
@@ -509,12 +514,6 @@ nav {
   float: left;
 }
 
-/* button {
-  border: none;
-  padding: 8px;
-  margin-right: 2px;
-} */
-
 .blue {
   background: rgba(35, 116, 171, 0.1);
   color: #2374AB !important;
@@ -532,47 +531,6 @@ nav {
   color: #2374AB !important;
   border: none;
   padding: 8px !important;
-}
-
-/* Formio */
-.card-header {
-  background-color: white !important;
-}
-
-.card-header .builder-group-button {
-  font-weight: 600;
-}
-
-/* 
-.formcomponents .formcomponent {
-  width: 136px !important;
-}
-
-.formbuilder .formcomponents {
-  width: 320px !important;
-} */
-
-.formbuilder .formarea {
-  /* width: 1175px !important; */
-  background-color: white !important;
-  border-radius: 5px;
-  padding: 10px 10px;
-  /* margin-bottom: 10px !important; */
-}
-
-.formio-dialog-overlay {
-  position: relative !important;
-  /* width: 40% !important; */
-  z-index: none !important;
-  background: white !important;
-}
-
-.formio-dialog.formio-dialog-theme-default .formio-dialog-content {
-  float: right !important;
-  /* max-width:40% !important; */
-  background-color: white !important;
-  width: 100% !important;
-  margin: 0px !important;
 }
 
 .configuration-box {
@@ -599,7 +557,6 @@ nav {
   margin-left: 5px
 }
 
-/* Formio End */
 /* ====================================== */
 /* ========= Form Builder End ========= */
 /* ====================================== */
@@ -645,7 +602,7 @@ nav {
 
 
 .download-btn {
-  width: 190px;
+  width: 160px;
   height: 40px;
   font-size: 13px;
   background: #2374AB;
@@ -1054,7 +1011,14 @@ nav {
 
 .alert {
   animation-name: example;
-  animation-duration: 2s;
+  animation-duration: 3s;
+  z-index: 1000;
+}
+
+.alert-success {
+  background-color: #2374AB !important;
+  border-color: #2374AB !important;
+  color: white !important;
 }
 
 @keyframes example {
@@ -1071,6 +1035,10 @@ nav {
 /*=============================*/
 /* ======= Action Popup ====== */
 /*=============================*/
+.popup-content {
+  width: 17rem !important;
+}
+
 .confirmClosebtn {
   border: none;
   border-radius: 5px;

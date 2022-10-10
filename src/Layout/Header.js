@@ -14,7 +14,7 @@ const Header = () => {
     auth.signOut();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("currentUser");
-    localStorage.removeItem("documentID");
+    localStorage.removeItem("userDocumentID");
     navigate("/login");
   };
 

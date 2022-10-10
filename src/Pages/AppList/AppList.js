@@ -72,7 +72,7 @@ const AppList = () => {
   const getData = async () => {
     setLoader(true);
     setAppList([]);
-    let documentID = localStorage.getItem("documentID");
+    let documentID = localStorage.getItem("userDocumentID");
     const querySnapshotTemp = await getDocs(
       collection(db, `users/${documentID}/apps`)
     );

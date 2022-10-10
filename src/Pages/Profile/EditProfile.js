@@ -35,7 +35,6 @@ const EditProfile = () => {
       userID = doc.id;
     });
     const user = doc(db, "users", userID);
-    console.log(user.password);
     if (user.password === oldPassword) {
       if (newPassword === confirmPassword) {
         return true;

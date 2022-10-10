@@ -66,7 +66,7 @@ export const getUserId = async (user) => {
     userID = doc.id;
   });
   if (userID) {
-    localStorage.setItem("documentID", userID);
+    localStorage.setItem("userDocumentID", userID);
   }
   return { userID, docs };
 };

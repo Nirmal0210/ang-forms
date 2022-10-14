@@ -1,20 +1,16 @@
 import React, { useState } from "react";
-import { BsSearch } from "react-icons/bs";
-import { AiOutlinePlus } from "react-icons/ai";
 import ActionPopup from "../../Components/ActionPopup";
 import {
-  addDoc,
   collection,
   doc,
   getDocs,
-  query,
   setDoc,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useEffect } from "react";
 import NoDataFound from "../../Components/NoDataFound";
+import { getUserId } from "../../Config/Setting";
 const AppList = () => {
   const [loader, setLoader] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -43,31 +39,24 @@ const AppList = () => {
       webLink: webLink,
       uid: currentUser.uid,
     };
-    const q = query(
-      collection(db, "users"),
-      where("uid", "==", currentUser.uid)
-    );
-    const querySnapshot = await getDocs(q);
-    let userID = "";
-    querySnapshot.forEach((doc) => {
-      userID = doc.id;
+    getUserId(currentUser).then(async (res) => {
+      await setDoc(doc(collection(db, `users/${res.userID}/apps`)), docData)
+        .then(() => {
+          setModalShow(false);
+          setIsSuccessful(true);
+          setTimeout(() => {
+            setIsSuccessful(false);
+          }, 2000);
+          getData();
+        })
+        .catch((error) => {
+          setModalShow(false);
+          setIsError(true);
+          setTimeout(() => {
+            setIsError(false);
+          }, 2000);
+        });
     });
-    await setDoc(doc(collection(db, `users/${userID}/apps`)), docData)
-      .then(() => {
-        setModalShow(false);
-        setIsSuccessful(true);
-        setTimeout(() => {
-          setIsSuccessful(false);
-        }, 2000);
-        getData();
-      })
-      .catch((error) => {
-        setModalShow(false);
-        setIsError(true);
-        setTimeout(() => {
-          setIsError(false);
-        }, 2000);
-      });
   };
   const getData = async () => {
     setLoader(true);
@@ -76,13 +65,21 @@ const AppList = () => {
     const querySnapshotTemp = await getDocs(
       collection(db, `users/${documentID}/apps`)
     );
+    let counter = 0;
     querySnapshotTemp.forEach((doc) => {
       let obj = doc.data();
       obj.appKey = doc.id;
-      appList.push(obj);
-      setAppList([...appList]);
+      counter += 1;
+      setAppList([...appList, obj]);
     });
-    setLoader(false);
+    const user = doc(db, "users", localStorage.getItem("userDocumentID"));
+    await updateDoc(user, {
+      totalApps: counter,
+    }).then(() => {
+      currentUser["totalApps"] = counter;
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      setLoader(false);
+    });
   };
   useEffect(() => {
     getData();
@@ -223,7 +220,7 @@ const AppList = () => {
                 className="input-group-text bg-white border-0"
                 id="basic-addon1"
               >
-                <BsSearch />
+                <i className="bi bi-search"></i>
               </span>
               <input
                 type="text"
@@ -240,11 +237,7 @@ const AppList = () => {
             >
               Create App
               <span className="ms-2">
-                <AiOutlinePlus
-                  style={{
-                    fontSize: "19px",
-                  }}
-                />
+                <i className="bi bi-plus-lg"></i>
               </span>
             </button>
           </div>

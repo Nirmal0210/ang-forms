@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { db, auth } from "../../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -20,29 +20,33 @@ const Signup = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      getUserId(user).then(async (docs, userID) => {
-        localStorage.setItem("userDocumentID", userID);
-        if (docs.docs.length === 0) {
-          await addDoc(collection(db, "users"), {
-            uid: user.uid,
-            name: user.displayName,
-            authProvider: "google",
-            email: user.email,
-            profile: user.photoURL,
-          });
-        }
-        if (user) {
+      getUserId(user).then(async (res) => {
+        if (res.userID) {
+          localStorage.setItem("userDocumentID", res.userID);
+          const newUser = doc(db, "users", res.userID);
+          const docSnap = await getDoc(newUser);
           localStorage.setItem("accessToken", user.accessToken);
-          const obj = {
-            uid: user.uid,
-            name: user.displayName,
-            mobNo: user.phoneNumber,
-            authProvider: "google",
-            email: user.email,
-            profile: user.photoURL,
-          };
-          localStorage.setItem("currentUser", JSON.stringify(obj));
+          localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
           navigate("/");
+        } else {
+          if (res.docs?.docs.length === 0) {
+            const obj = {
+              uid: user.uid,
+              name: user.displayName,
+              mobNo: user.phoneNumber,
+              authProvider: "google",
+              email: user.email,
+              profile: user.photoURL,
+              publishFormLinks: 0,
+              appFormLinks: 0,
+              totalApps: 0,
+            };
+            await addDoc(collection(db, "users"), obj);
+            localStorage.setItem("userDocumentID", res.userID);
+            localStorage.setItem("accessToken", user.accessToken);
+            localStorage.setItem("currentUser", JSON.stringify(obj));
+            navigate("/");
+          }
         }
       });
     } catch (err) {
@@ -55,37 +59,45 @@ const Signup = () => {
     if (logUser.password === logUser.confirmPassword) {
       setLoader(true);
       try {
-        const res = await createUserWithEmailAndPassword(
-          auth,
-          logUser.email,
-          logUser.password
-        );
-        const user = res.user;
-        await addDoc(collection(db, "users"), {
-          uid: user.uid,
-          name: logUser.name,
-          mobNo: logUser.mobNo,
-          authProvider: "local",
-          email: logUser.email,
-          password: logUser.password,
-          profile: user.photoURL,
-        });
-        if (user && logUser) {
-          let userID = getUserId(user);
-          localStorage.setItem("userDocumentID", userID);
-          localStorage.setItem("accessToken", user.accessToken);
-          const obj = {
-            uid: user.uid,
-            name: logUser.name,
-            mobNo: logUser.mobNo,
-            authProvider: "local",
-            email: logUser.email,
-            password: logUser.password,
-            profile: user.photoURL,
-          };
-          localStorage.setItem("currentUser", JSON.stringify(obj));
-          navigate("/");
-        }
+        createUserWithEmailAndPassword(auth, logUser.email, logUser.password)
+          .then(async (result) => {
+            const user = result.user;
+            await addDoc(collection(db, "users"), {
+              uid: user.uid,
+              name: logUser.name,
+              mobNo: logUser.mobNo,
+              authProvider: "local",
+              email: logUser.email,
+              password: logUser.password,
+              profile: user.photoURL,
+              publishFormLinks: 0,
+              appFormLinks: 0,
+              totalApps: 0,
+            });
+            if (user && logUser) {
+              let userID = getUserId(user);
+              localStorage.setItem("userDocumentID", userID);
+              localStorage.setItem("accessToken", user.accessToken);
+              const obj = {
+                uid: user.uid,
+                name: logUser.name,
+                mobNo: logUser.mobNo,
+                authProvider: "local",
+                email: logUser.email,
+                password: logUser.password,
+                profile: user.photoURL,
+                publishFormLinks: 0,
+                appFormLinks: 0,
+                totalApps: 0,
+              };
+              localStorage.setItem("currentUser", JSON.stringify(obj));
+              navigate("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err.code);
+            console.log(err.message);
+          });
       } catch (err) {
         console.log(err.message);
         console.error(err);

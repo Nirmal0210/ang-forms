@@ -13,12 +13,13 @@ import FormLinkList from "../Pages/FormList/FormLinkList";
 import Notifications from "../Pages/Notifications/Notifications";
 import ReactForms from "../Pages/FormBuilder/ReactForms";
 import Signup from "../Pages/Login/Signup";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { AuthProvider } from "../AuthContext";
 import { auth } from "../firebase";
 import PrivateRoute from "../PrivateRoute";
 import { Navigate } from "react-router-dom";
 import FormDialog from "../Pages/FormBuilder/FormDialog";
+import Preview from "../Pages/FormBuilder/Preview";
 
 const RouterLayout = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -133,6 +134,11 @@ const RouterLayout = () => {
               <ReactForms />
             </PrivateRoute>
           }
+        />
+        <Route
+          exact
+          path="/preview/:userID/:docRefId"
+          element={<Preview />}
         />
       </Routes>
     </AuthProvider>

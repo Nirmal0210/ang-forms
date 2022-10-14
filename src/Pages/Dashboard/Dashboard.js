@@ -1,12 +1,12 @@
 import React from "react";
-import { BsJoystick } from "react-icons/bs";
 const Dashboard = () => {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   return (
     <div className="container extra-pad">
-      <div className="row row-cols-2 row-cols-lg-4 g-2 g-lg-3 justify-content-between">
+      <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 justify-content-between">
         <div className="col box">
           <div className="row d-flex align-items-center">
-            <div className="col-3 p-3">
+            <div className="col-3">
               <div className="box-icon">
                 <img
                   src={require("../../Assets/Images/chain-bg.png")}
@@ -18,15 +18,15 @@ const Dashboard = () => {
             </div>
             <div className="col-9">
               <div className="title-black" style={{ color: "#39A2AE" }}>
-                36
+                {currentUser?.totalApps}
               </div>
-              <div className="body-large-black">Form links created</div>
+              <div className="body-black">Total Apps Created</div>
             </div>
           </div>
         </div>
         <div className="col box">
           <div className="row d-flex align-items-center">
-            <div className="col-3 p-3">
+            <div className="col-3">
               <div className="box-icon">
                 <img
                   src={require("../../Assets/Images/chain-bg.png")}
@@ -38,15 +38,15 @@ const Dashboard = () => {
             </div>
             <div className="col-9">
               <div className="title-black" style={{ color: "#39A2AE" }}>
-                36
+                {currentUser?.appFormLinks}
               </div>
-              <div className="body-large-black">Form links created</div>
+              <div className="body-black">App Form links Created</div>
             </div>
           </div>
         </div>
         <div className="col box">
           <div className="row d-flex align-items-center">
-            <div className="col-3 p-3">
+            <div className="col-3">
               <div className="box-icon">
                 <img
                   src={require("../../Assets/Images/chain-bg.png")}
@@ -58,29 +58,9 @@ const Dashboard = () => {
             </div>
             <div className="col-9">
               <div className="title-black" style={{ color: "#39A2AE" }}>
-                36
+                {currentUser?.publishFormLinks}
               </div>
-              <div className="body-large-black">Form links created</div>
-            </div>
-          </div>
-        </div>
-        <div className="col box">
-          <div className="row d-flex align-items-center">
-            <div className="col-3 p-3">
-              <div className="box-icon">
-                <img
-                  src={require("../../Assets/Images/chain-bg.png")}
-                  width="25px"
-                  height="25px"
-                  alt="chain"
-                />
-              </div>
-            </div>
-            <div className="col-9">
-              <div className="title-black" style={{ color: "#39A2AE" }}>
-                36
-              </div>
-              <div className="body-large-black">Form links created</div>
+              <div className="body-black">Publish Form links created</div>
             </div>
           </div>
         </div>
@@ -112,14 +92,14 @@ const Dashboard = () => {
                   </select>
                 </label>
               </div>
-              <div className="d-flex justify-content-center mt-5 p-3">
+              <div className="d-flex justify-content-center mt-2 p-3">
                 <div className="pie-image">
                   <div className="icon-over-image">
-                    <BsJoystick style={{ height: "30px", width: "30px" }} />
+                    <i className="bi bi-joystick d-flex"></i>
                   </div>
                 </div>
               </div>
-              <div className="container mt-2 p-3 text-center">
+              <div className="container mt-1 p-3 text-center">
                 <div className="row row-cols-2 row-cols-lg-2 g-3 g-lg-3">
                   <div className="col d-flex">
                     <div className="dot-1"></div>
@@ -131,12 +111,6 @@ const Dashboard = () => {
                     <div className="dot-2"></div>
                     <div className="subtitle-black fw-bold ms-1">
                       App name 2
-                    </div>
-                  </div>
-                  <div className="col d-flex">
-                    <div className="dot-3"></div>
-                    <div className="subtitle-black fw-bold ms-1">
-                      App name 3
                     </div>
                   </div>
                 </div>
@@ -197,9 +171,9 @@ const Dashboard = () => {
           <div className="body-large-black fw-bold text-start">
             Recent Response
           </div>
-          <div className="mt-5 px-3 tableFixHeadDash">
-            <table className="table">
-              <thead>
+          <div className="mt-5 px-3">
+            <table className="table table-light text-start table-hover">
+              <thead className="border-1">
                 <tr>
                   <th scope="col" className="body-black fw-bold">
                     Form Id
@@ -257,15 +231,6 @@ const Dashboard = () => {
         >
           <div className="body-large-black fw-bold text-start mb-3">
             Billing History
-          </div>
-          <div className="d-flex justify-content-between align-items-center my-3">
-            <div className="subtitle-black">12 Jan 2022, 4:30 PM</div>
-            <div
-              className="body-large-black fw-bold"
-              style={{ color: "#12BB7D" }}
-            >
-              $52.25
-            </div>
           </div>
           <div className="d-flex justify-content-between align-items-center my-3">
             <div className="subtitle-black">12 Jan 2022, 4:30 PM</div>

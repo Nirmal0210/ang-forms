@@ -4,28 +4,28 @@ import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import NoDataFound from "../../Components/NoDataFound";
-import ViewDetails from "../../Components/ViewDetails";
 
 const FormLinkList = () => {
   const [loader, setLoader] = useState(false);
   const [formLinkList, setFormLinkList] = useState([]);
 
-  const getData = async () => {
-    setLoader(true);
-    let documentID = localStorage.getItem("userDocumentID");
-    const querySnapshotTemp = await getDocs(
-      collection(db, `users/${documentID}/publish`)
-    );
-    querySnapshotTemp.forEach((item) => {
-      let obj = item.data();
-      obj.appKey = item.id;
-      formLinkList.push(obj);
-      setFormLinkList([...formLinkList]);
-    });
-    setLoader(false);
-  };
   useEffect(() => {
-    setFormLinkList([]);
+    const getData = async () => {
+      setLoader(true);
+      setFormLinkList([]);
+
+      let documentID = localStorage.getItem("userDocumentID");
+      const querySnapshotTemp = await getDocs(
+        collection(db, `users/${documentID}/publish`)
+      );
+      querySnapshotTemp.forEach((item) => {
+        let obj = item.data();
+        obj.appKey = item.id;
+        formLinkList.push(obj);
+        setFormLinkList([...formLinkList]);
+      });
+      setLoader(false);
+    };
     getData();
   }, []);
   return (
@@ -111,9 +111,9 @@ const FormLinkList = () => {
                 </div>
               </div>
             ) : formLinkList.length > 0 ? (
-              <div className="mt-5 px-3 tableFixHead">
-                <table className="table">
-                  <thead>
+              <div className="mt-5 px-3">
+                <table className="table table-light text-start table-hover">
+                  <thead className="border-1">
                     <tr>
                       <th scope="col" className="body-black fw-bold">
                         Form Id
@@ -130,7 +130,7 @@ const FormLinkList = () => {
                       <th scope="col" className="body-black fw-bold">
                         Responses
                       </th>
-                      <th scope="col" className="body-black fw-bold"></th>
+                      {/* <th scope="col" className="body-black fw-bold"></th> */}
                       <th scope="col" className="body-black fw-bold"></th>
                     </tr>
                   </thead>
@@ -144,9 +144,9 @@ const FormLinkList = () => {
                         </td>
                         <td className="subtitle-black">{item?.impressions}</td>
                         <td className="subtitle-black">{item?.responses}</td>
-                        <td className="subtitle-black">
+                        {/* <td className="subtitle-black">
                           <ViewDetails data={item} />
-                        </td>
+                        </td> */}
                         <td className="subtitle-black">
                           <ActionPopup />
                         </td>

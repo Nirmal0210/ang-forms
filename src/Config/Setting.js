@@ -62,11 +62,16 @@ export const getUserId = async (user) => {
   let q = query(collection(db, "users"), where("email", "==", user.email));
   let docs = await getDocs(q);
   let userID = "";
+  let userData = {};
+  let str = "";
   docs?.forEach((doc) => {
     userID = doc.id;
+    userData = doc.data();
   });
   if (userID) {
     localStorage.setItem("userDocumentID", userID);
+  } else {
+    str = "User not found";
   }
-  return { userID, docs };
+  return { userID, docs, userData, str };
 };

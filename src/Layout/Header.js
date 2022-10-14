@@ -7,6 +7,7 @@ import { auth } from "../firebase";
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [dateTime, setDateTime] = useState();
   const [currentUser] = useState(
     JSON.parse(localStorage.getItem("currentUser"))
   );
@@ -17,6 +18,17 @@ const Header = () => {
     localStorage.removeItem("userDocumentID");
     navigate("/login");
   };
+
+  useEffect(() => {
+    function getDataTime() {
+      const formattedDate = new Date().toLocaleDateString(
+        {},
+        { timeZone: "UTC", month: "long", day: "2-digit", year: "numeric" }
+      );
+      setDateTime(formattedDate);
+    }
+    getDataTime();
+  }, []);
 
   return (
     currentUser && (
@@ -44,20 +56,17 @@ const Header = () => {
           >
             <ul className="navbar-nav">
               <li className="nav-item">
-                <NavLink
+                <div
                   className="nav-link"
-                  activeclassname="active"
-                  aria-current="page"
-                  href="#"
                 >
-                  12th January, 2022
-                </NavLink>
+                  {dateTime && dateTime}
+                </div>
               </li>
 
               <li className="nav-item ms-3">
-                <NavLink className="nav-link" href="#">
+                <div className="nav-link">
                   <i className="bi bi-bell-fill"></i>
-                </NavLink>
+                </div>
               </li>
               <li className="nav-item d-flex align-items-center ms-3">
                 {currentUser && (
@@ -67,9 +76,9 @@ const Header = () => {
                     pClass={"small"}
                   />
                 )}
-                <NavLink className="nav-link" href="#" aria-disabled="true">
+                <div className="nav-link" aria-disabled="true">
                   <p className="body-large-black">{currentUser?.name}</p>
-                </NavLink>
+                </div>
                 <i className="bi bi-chevron-down" onClick={() => logout()}></i>
               </li>
             </ul>

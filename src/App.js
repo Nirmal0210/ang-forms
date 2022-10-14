@@ -1,5 +1,4 @@
-import "reactjs-popup/dist/index.css";
-import "./Assets/Css/Style.css";
+
 import Login from "./Pages/Login/Login";
 import Header from "./Layout/Header";
 import RouterLayout from "./Layout/RouterLayout";
@@ -13,14 +12,14 @@ function App() {
       {location.pathname !== "/login" && location.pathname !== "/signup" ? (
         <>
           {location.pathname !== "/createform" &&
-            location.pathname !== "/reactform" && <Sidebar />}
+            location.pathname !== "/reactform" &&
+            !location.pathname.includes("preview") && <Sidebar />}
           <div id="main">
             <Header />
-
             <RouterLayout />
           </div>
         </>
-      ) : location.pathname == "/login" ? (
+      ) : location.pathname === "/login" ? (
         <Login />
       ) : (
         <Signup />

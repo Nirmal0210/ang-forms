@@ -2,81 +2,66 @@ import React, { useState, useEffect } from "react";
 import ActionPopup from "../../Components/ActionPopup";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { FcGoogle } from "react-icons/fc";
-import { IoExtensionPuzzle } from "react-icons/io5";
-import { BsFillPlusCircleFill, BsGithub } from "react-icons/bs";
-import { BiChevronRight, BiRefresh } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
-import { db } from "../../firebase";
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { BsGithub } from "react-icons/bs";
+import { auth, db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { sendEmailVerification } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { updatePassword } from "firebase/auth";
+
 const EditProfile = () => {
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("currentUser"))
   );
-  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const matchPassword = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("email", "==", currentUser.email)
-    );
-    const querySnapshot = await getDocs(q);
-    let userID = "";
-    querySnapshot.forEach((doc) => {
-      userID = doc.id;
-    });
-    const user = doc(db, "users", userID);
-    if (user.password === oldPassword) {
-      if (newPassword === confirmPassword) {
-        return true;
-      } else {
-        alert("New Password doesn't match with ConfirmPassword");
-        return false;
-      }
+  const matchPassword = (user) => {
+    if (newPassword === confirmPassword) {
+      return true;
     } else {
-      alert("Old Password doesn't match with Registerd Password");
+      alert("New Password doesn't match with ConfirmPassword");
       return false;
     }
   };
   //Update User
   const updateUser = async () => {
-    // const validate = matchPassword();
-    // if (validate) {
-      
-    const q = query(
-      collection(db, "users"),
-      where("uid", "==", currentUser.uid)
-    );
-    const querySnapshot = await getDocs(q);
-    let userID = "";
-    querySnapshot.forEach((doc) => {
-      userID = doc.id;
-    });
-    const user = doc(db, "users", userID);
-    await updateDoc(user, {
+    const userID = localStorage.getItem("userDocumentID");
+    const docRef = doc(db, "users", userID);
+
+    await updateDoc(docRef, {
       name: currentUser.name,
       mobNo: currentUser.mobNo,
-      // password: newPassword,
+    }).then(() => {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
     });
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
     setIsUpdate(!isUpdate);
-    //  }
+    navigate("/");
   };
+
+  const changePassword = () => {
+    let validate = matchPassword();
+    if (validate) {
+      const user = auth.currentUser;
+      updatePassword(user, newPassword)
+        .then(() => {
+          alert("Updated successful.");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
+
   const onHandleChange = (e) => {
     const title = e.target.name;
     const value = e.target.value;
     currentUser[title] = value;
     setCurrentUser({ ...currentUser });
   };
+
   useEffect(() => {
     setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
   }, [isUpdate]);
@@ -84,15 +69,10 @@ const EditProfile = () => {
   return (
     <div className="container extra-pad px-4">
       <div className="row">
-        <div className="col-6">
+        <div className="col-12">
           <p className="fw-bold heading-black text-start">
             Account Informations
           </p>
-        </div>
-        <div className="col-6 d-flex justify-content-end">
-          <button className="publish-btn" onClick={() => updateUser()}>
-            Save
-          </button>
         </div>
       </div>
       <div className="mt-3">
@@ -100,51 +80,81 @@ const EditProfile = () => {
           <TabList>
             <Tab>
               <div className="d-flex align-items-center">
-                <CgProfile className="tab-icon" />
+                <i className="tab-icon bi bi-person-circle" />
                 <p className="subtitle-black response ms-1">Manage profile</p>
               </div>
-              <BiChevronRight />
+              <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
-                <BiRefresh className="tab-icon" />
+                <i className="tab-icon bi bi-arrow-repeat" />
                 <p className="subtitle-black response ms-1">
                   Manage subscription
                 </p>
               </div>
-              <BiChevronRight />
+              <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
-                <IoExtensionPuzzle className="tab-icon" />
+                <i className="tab-icon bi bi-puzzle" />
                 <p className="subtitle-black response ms-1">Manage Add ons</p>
               </div>
-              <BiChevronRight />
+              <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
-                <IoExtensionPuzzle className="tab-icon" />
+                <i className="bi bi-wallet2 tab-icon"></i>
                 <p className="subtitle-black response ms-1">
                   Manage Payment methods
                 </p>
               </div>
-              <BiChevronRight />
+              <i className="bi bi-chevron-right" />
             </Tab>
+            {/* {currentUser && currentUser.authProvider === "local" && ( */}
+            <Tab>
+              <div className="d-flex align-items-center">
+                <i className="bi bi-key tab-icon"></i>
+                <p className="subtitle-black response ms-1">Change Password</p>
+              </div>
+              <i className="bi bi-chevron-right" />
+            </Tab>
+            {/* )} */}
           </TabList>
 
           <TabPanel>
             <div className="panel-content">
-              <p className="body-large-black fw-bold text-start">
-                Profile Information
-              </p>
+              <div className="row">
+                <div className="col-6">
+                  <p className="body-large-black fw-bold text-start">
+                    Profile Information
+                  </p>
+                </div>
+                <div className="col-6 d-flex justify-content-end">
+                  <button className="publish-btn" onClick={() => updateUser()}>
+                    Save
+                  </button>
+                </div>
+              </div>
+
               <div className="mt-2">
                 <img
                   className="mask1"
-                  src={currentUser.profile}
+                  src={
+                    currentUser.profile
+                      ? currentUser.profile
+                      : require("../../Assets/Images/user-icon.png")
+                  }
                   height={"90px"}
                   width={"90px"}
                   alt="response"
                 />
+                {/* <label className="custom-file-upload">
+                  <input
+                    type="file"
+                    onChange={(e) => getBase64(e.target.files[0])}
+                  />
+                  <i className="bi bi-pencil"></i>
+                </label> */}
               </div>
               <div className="mt-2">
                 <form className="row">
@@ -208,46 +218,17 @@ const EditProfile = () => {
                   </p>
                 </div>
               </div>
-              {currentUser && currentUser.authProvider === "local" && (
-                <div className="mt-3">
-                  <p className="body-large-black fw-bold text-start">
-                    Change Password
-                  </p>
-                  <div className="row">
-                    <div className="mb-3 col-6">
-                      <label className="form-label mb-0 body-black">
-                        Old Password
-                      </label>
-                      <input
-                        type="text"
-                        name="password"
-                        onChange={(e) => setOldPassword(e.target.value)}
-                        className="form-control form-control-sm"
-                      />
-                    </div>
-                    <div className="mb-3 col-6">
-                      <label className="form-label mb-0 body-black">
-                        New Password
-                      </label>
-                      <input
-                        type="text"
-                        name="newpassword"
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className="form-control form-control-sm"
-                      />
-                    </div>
-                    <div className="mb-3 col-6">
-                      <label className="form-label mb-0 body-black">
-                        Confirm Password
-                      </label>
-                      <input
-                        type="text"
-                        name="confirmPassword"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="form-control form-control-sm"
-                      />
-                    </div>
-                  </div>
+              {!auth.currentUser?.emailVerified && (
+                <div className="row g-0 my-3">
+                  <button
+                    className="download-btn"
+                    onClick={() => {
+                      sendEmailVerification(auth.currentUser);
+                      alert("Mail has been set successfully");
+                    }}
+                  >
+                    Verify Email
+                  </button>
                 </div>
               )}
             </div>
@@ -467,7 +448,8 @@ const EditProfile = () => {
                 <div className="col-6">
                   <div className="master-card-dotted">
                     <div className="add-card-circle">
-                      <BsFillPlusCircleFill
+                      <i
+                        className="bi bi-plus-circle-fill"
                         style={{ color: "#2374AB", fontSize: "30px" }}
                       />
                     </div>
@@ -478,7 +460,7 @@ const EditProfile = () => {
                 Saved Cards
               </p>
               <div
-                className="mt-1 px-3 tableFixHeadDash"
+                className="mt-1 px-3 tableFixHeadCard"
                 style={{ maxHeight: "150px" }}
               >
                 <table className="table">
@@ -569,6 +551,49 @@ const EditProfile = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className="panel-content">
+              {/* {currentUser && currentUser.authProvider === "local" && ( */}
+              <div className="mt-3">
+                <p className="body-large-black fw-bold text-start">
+                  Change Password
+                </p>
+                <div className="row my-2 g-1">
+                  <div className="mb-3 col-6">
+                    <label className="form-label mb-0 body-black">
+                      New Password
+                    </label>
+                    <input
+                      type="text"
+                      name="newpassword"
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                  <div className="mb-3 col-6">
+                    <label className="form-label mb-0 body-black">
+                      Confirm Password
+                    </label>
+                    <input
+                      type="text"
+                      name="confirmPassword"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="form-control form-control-sm"
+                    />
+                  </div>
+                </div>
+                <div className="row g-0">
+                  <button
+                    className="download-btn"
+                    onClick={() => changePassword()}
+                  >
+                    Change Password
+                  </button>
+                </div>
+              </div>
+              {/* )} */}
             </div>
           </TabPanel>
         </Tabs>

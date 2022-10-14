@@ -18,6 +18,33 @@ nav {
   background: #fff !important;
 }
 
+input[type="file"] {
+  display: none;
+}
+
+.active {
+  color: #2374AB !important;
+}
+
+.active i {
+  color: #2374AB !important;
+}
+
+.active p {
+  color: #2374AB !important;
+}
+
+.custom-file-upload {
+  justify-content: center;
+  align-items: center;
+  background-color: #2374AB;
+  color: white;
+  display: inline-block;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -46,13 +73,42 @@ nav {
 
 .tableFixHeadDash thead tr {
   display: block;
+  border: 1px solid black;
+}
+
+.tableFixHeadDash tbody tr {
+  border-bottom: 1px solid black;
 }
 
 .tableFixHeadDash th,
 .tableFixHeadDash td {
-  width: 150px;
+  min-width: 165px;
   text-align: start;
 }
+
+.tableFixHeadCard {
+  table-layout: fixed;
+  border-collapse: collapse;
+  overflow: auto;
+}
+
+
+.tableFixHeadCard tbody {
+  display: block;
+  height: 200px;
+
+}
+
+.tableFixHeadCard thead tr {
+  display: block;
+}
+
+.tableFixHeadCard th,
+.tableFixHeadCard td {
+  width: 138px;
+  text-align: start;
+}
+
 
 .tableFixHead {
   table-layout: fixed;
@@ -180,20 +236,20 @@ nav {
   background-color: #fff !important;
   position: fixed;
   height: 100%;
-  overflow: auto;
   z-index: 5000;
 }
 
 .sidebar-btn {
-  width: 170px;
-  height: 50px;
+  width: 150px;
+  height: 45px;
   background: #2374AB;
   border-radius: 5px;
   border: none;
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+  font-size: 13px;
 }
 
 .sidebar-btn-collapse {
@@ -217,6 +273,12 @@ nav {
   color: #444;
   display: block;
   transition: 0.5s;
+}
+
+.sidebar .dropdown-content a {
+  padding: 15px;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -356,8 +418,8 @@ nav {
 .box {
   display: flex;
   align-items: center;
-  width: 260px;
-  height: 120px;
+  width: 370px;
+  height: 100px;
   padding: 1rem;
   border-radius: 20px;
   background-color: white;
@@ -375,14 +437,14 @@ nav {
 
 .total-response-graph-box {
   background-color: white;
-  height: 332px;
+  height: 280px;
   border-radius: 20px;
   width: 845px;
 }
 
 .total-response-box {
   background-color: #FB5012;
-  height: 332px;
+  height: 280px;
   border-radius: 20px;
   width: 260px;
 }
@@ -422,6 +484,9 @@ nav {
 }
 
 .dot-white {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -603,6 +668,19 @@ nav {
 
 .download-btn {
   width: 160px;
+  height: 40px;
+  font-size: 13px;
+  background: #2374AB;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.download-response-btn {
+  width: 180px;
   height: 40px;
   font-size: 13px;
   background: #2374AB;
@@ -822,6 +900,7 @@ nav {
   mask-repeat: no-repeat; */
   border-radius: 50%;
   border: 1px solid black;
+  margin-right: 10px;
 }
 
 /*============ Tab 2 ==========*/
@@ -1054,4 +1133,16 @@ nav {
   color: white;
   padding: 5px;
   width: 80px;
+}
+
+.text-url-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.small-spin {
+  margin: 0 !important;
+  height: 1.5rem;
+  width: 1.5rem;
 }

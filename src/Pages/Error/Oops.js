@@ -13,9 +13,16 @@ const Oops = () => {
               alt="error"
             />
           </div>
-          <p className="big-title-black mt-3 fw-bold">Oops! Something went wrong</p>
+          <p className="big-title-black mt-3 fw-bold">
+            Oops! Something went wrong
+          </p>
           <div className="d-flex justify-content-center mt-5">
-            <button className="sidebar-btn">Reload the page</button>
+            <button
+              className="sidebar-btn"
+              onClick={() => (window.location.href = "/")}
+            >
+              Reload the page
+            </button>
           </div>
         </div>
       </div>

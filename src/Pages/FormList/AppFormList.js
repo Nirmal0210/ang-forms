@@ -8,27 +8,28 @@ import ViewDetails from "../../Components/ViewDetails";
 const AppFormList = () => {
   const [loader, setLoader] = useState(false);
   const [appList, setAppList] = useState([]);
-  const getData = async () => {
-    setLoader(true);
-    setAppList([]);
-    let documentID = localStorage.getItem("userDocumentID");
-    const querySnapshotTemp = await getDocs(
-      collection(db, `users/${documentID}/apps`)
-    );
-    querySnapshotTemp.forEach(async (doc) => {
-      const querySnapshot = await getDocs(
-        collection(db, `users/${documentID}/apps/${doc.id}/forms`)
-      );
-      querySnapshot.forEach((item) => {
-        let obj = item.data();
-        obj.appKey = item.id;
-        appList.push(obj);
-        setAppList([...appList]);
-      });
-    });
-    setLoader(false);
-  };
+
   useEffect(() => {
+    const getData = async () => {
+      setLoader(true);
+      setAppList([]);
+      let documentID = localStorage.getItem("userDocumentID");
+      const querySnapshotTemp = await getDocs(
+        collection(db, `users/${documentID}/apps`)
+      );
+      querySnapshotTemp.forEach(async (doc) => {
+        const querySnapshot = await getDocs(
+          collection(db, `users/${documentID}/apps/${doc.id}/forms`)
+        );
+        querySnapshot.forEach((item) => {
+          let obj = item.data();
+          obj.appKey = item.id;
+          appList.push(obj);
+          setAppList([...appList]);
+        });
+      });
+      setLoader(false);
+    };
     getData();
   }, []);
 
@@ -52,19 +53,9 @@ const AppFormList = () => {
           </div>
         </div>
         <div className="col-1">
-          <div className="input-group border-0 rounded">
-            <span
-              className="input-group-text p-2 bg-white border-0"
-              id="basic-addon1"
-            >
-              <i className="bi bi-funnel"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control border-0 subtitle-black ps-0"
-              placeholder="Filters"
-              aria-describedby="basic-addon1"
-            />
+          <div className="bg-white d-flex p-2 align-items-center border-0 rounded">
+            <i className="bi bi-funnel"></i>
+            <p className="subtitle-black ms-2">Filters</p>
           </div>
         </div>
         <div className="col-2"></div>
@@ -115,9 +106,9 @@ const AppFormList = () => {
                 </div>
               </div>
             ) : appList.length > 0 ? (
-              <div className="mt-5 px-3 tableFixHead">
-                <table className="table">
-                  <thead>
+              <div className="mt-5 px-3">
+                <table className="table table-light text-start table-hover">
+                  <thead className="border-1">
                     <tr>
                       <th scope="col" className="body-black fw-bold">
                         Form Id
@@ -154,118 +145,6 @@ const AppFormList = () => {
                         </td>
                       </tr>
                     ))}
-
-                    {/* <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">2</td>
-                      <td className="subtitle-black response">768</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random App Name</td>
-                      <td className="subtitle-black">Larry the Bird</td>
-                      <td className="subtitle-black">20000</td>
-                      <td className="subtitle-black response">2000</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="subtitle-black">Random ID</td>
-                      <td className="subtitle-black">Random Form Name</td>
-                      <td className="subtitle-black">Thornton</td>
-                      <td className="subtitle-black">37</td>
-                      <td className="subtitle-black response">2700</td>
-                      <td className="subtitle-black">
-                        <ActionPopup />
-                      </td>
-                    </tr> */}
                   </tbody>
                 </table>
               </div>

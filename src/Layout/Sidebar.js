@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MdDashboard, MdOutlineMessage } from "react-icons/md";
-import { AiOutlineUser, AiOutlinePlus } from "react-icons/ai";
-import { IoLogoGooglePlaystore, IoLogoApple } from "react-icons/io5";
-import { IoMdSettings } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import { BsJoystick } from "react-icons/bs";
-import { BiTask } from "react-icons/bi";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
+  const [isDrop, setIsDrop] = useState(false);
   /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
   const openNav = () => {
     document.getElementById("main").style.marginLeft = "190px";
@@ -26,8 +21,8 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (true) {
-      document.getElementById("mySidebar").style.width = "75px";
-      document.getElementById("main").style.marginLeft = "75px";
+      document.getElementById("main").style.marginLeft = "190px";
+      document.getElementById("mySidebar").style.width = "190px";
     }
   }, []);
 
@@ -52,71 +47,126 @@ const Sidebar = () => {
             {!toggle ? (
               <div>
                 Create Form{" "}
-                <AiOutlinePlus
+                <i
+                  className="bi bi-plus-lg"
                   style={{
                     fontSize: "15px",
                     marginLeft: "5px",
                   }}
-                />
+                ></i>
               </div>
             ) : (
-              <AiOutlinePlus
+              <i
+                className="bi bi-plus"
                 style={{
                   fontSize: "20px",
                 }}
-              />
+              ></i>
             )}
           </button>
         </div>
         <div>
-          <Link to="/" className="d-flex align-items-center mt-4">
-            <MdDashboard className="me-3" />
+          <NavLink
+            activeClassName="active"
+            to="/"
+            className="d-flex align-items-center mt-3"
+          >
+            <i className="bi bi-columns me-3" />
             {!toggle && <div className="body-black">Dashboard</div>}
-          </Link>
-          <Link to="#" className="d-flex align-items-center dropdown mt-3">
-            <button className="dropbtn p-0 sidebar-drop" >
-              <BiTask style={{ fontSize: "19px" }} className="me-3" />
-              {!toggle && <div className="body-black">Forms</div>}
+          </NavLink>
+          <NavLink className="d-flex align-items-center dropdown mt-1">
+            <button
+              className="dropbtn p-0 sidebar-drop"
+              onClick={() => setIsDrop(!isDrop)}
+            >
+              <i
+                style={{ fontSize: "19px" }}
+                className="me-3 bi bi-clipboard-check"
+              ></i>
+              {!toggle && (
+                <div className="body-black">
+                  Forms{" "}
+                  <span>
+                    {isDrop ? (
+                      <i className="bi bi-chevron-up ms-1"></i>
+                    ) : (
+                      <i className="bi bi-chevron-down ms-1"></i>
+                    )}
+                  </span>
+                </div>
+              )}
             </button>
-            {!toggle && (
-              <div className="dropdown-content mt-5">
-                <Link to="/appformlist" className="d-flex align-items-center">
-                  <p className="subtitle-black ms-2">App Forms</p>
-                </Link>
-                <Link to="/formlinklist" className="d-flex align-items-center">
-                  <p className="subtitle-black ms-2">Form Links</p>
-                </Link>
-              </div>
-            )}
-          </Link>
-          <Link to="/applist" className="d-flex align-items-center mt-3">
-            <BsJoystick className="me-3" />
+          </NavLink>
+          {isDrop && (
+            <>
+              <NavLink
+                to="/appformlist"
+                activeClassName="active"
+                className="d-flex align-items-center mt-1"
+              >
+                <i
+                  style={{ fontSize: "19px" }}
+                  className="me-2 bi bi-app-indicator"
+                ></i>
+                {!toggle && <p className="subtitle-black ms-1">App Forms</p>}
+              </NavLink>
+              <NavLink
+                to="/formlinklist"
+                activeClassName="active"
+                className="d-flex align-items-center mt-1"
+              >
+                <i
+                  style={{ fontSize: "19px" }}
+                  className="me-2 bi bi-ui-radios"
+                ></i>
+                {!toggle && <p className="subtitle-black ms-1">Form Links</p>}
+              </NavLink>
+            </>
+          )}
+          <NavLink
+            to="/applist"
+            activeClassName="active"
+            className="d-flex align-items-center mt-1"
+          >
+            <i className="me-3 bi bi-joystick"></i>
             {!toggle && <p className="body-black">My Apps</p>}
-          </Link>
-          <Link to="/responses" className="d-flex align-items-center mt-3">
-            <MdOutlineMessage className="me-3" />
+          </NavLink>
+          <NavLink
+            to="/responses"
+            activeClassName="active"
+            className="d-flex align-items-center mt-1"
+          >
+            <i className="me-3 bi bi-chat-left-text"></i>
             {!toggle && <p className="body-black">Responses</p>}
-          </Link>
-          <Link to="/editprofile" className="d-flex align-items-center mt-3">
-            <AiOutlineUser className="me-3" />
+          </NavLink>
+          <NavLink
+            to="/editprofile"
+            activeClassName="active"
+            className="d-flex align-items-center mt-1"
+          >
+            <i className="me-3 bi bi-person"></i>
             {!toggle && <p className="body-black">Profile</p>}
-          </Link>
-          <Link to="#" className="d-flex align-items-center mt-3">
-            <IoMdSettings className="me-3" />
+          </NavLink>
+          <NavLink
+            to="/settings"
+            activeClassName="active"
+            className="d-flex align-items-center mt-1"
+          >
+            <i className="me-3 bi bi-gear"></i>
             {!toggle && <p className="body-black">Settings</p>}
-          </Link>
+          </NavLink>
         </div>
         {!toggle && (
-          <div className="d-flex justify-content-center mt-3">
+          <div className="d-flex justify-content-center mt-1">
             <div className="mobile-box text-center p-2">
               <img src={require("../Assets/Images/mobile.png")} alt="mobile" />
               <p className="my-2 sm-white">Download the mobile app</p>
               <div className="d-flex justify-content-evenly">
                 <div className="dot-white">
-                  <IoLogoGooglePlaystore style={{ color: "black" }} />
+                  <i className="bi bi-google-play" style={{ color: "black" }} />
                 </div>
                 <div className="dot-white">
-                  <IoLogoApple style={{ color: "black" }} />
+                  <i className="bi bi-apple" style={{ color: "black" }} />
                 </div>
               </div>
             </div>

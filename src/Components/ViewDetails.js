@@ -9,7 +9,7 @@ const ViewDetails = ({ data }) => {
     <div>
       <Popup
         trigger={
-          <button className="bg-white border-0">
+          <button className="border-0" style={{ background: "transparent" }}>
             <i style={{ fontSize: "15px" }} className="bi bi-eye-fill"></i>
           </button>
         }

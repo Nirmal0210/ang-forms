@@ -18,61 +18,65 @@ const Login = () => {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
-      let { userID, docs } = getUserId(user);
-      if (userID) {
-        const newUser = doc(db, "users", userID);
-        const docSnap = await getDoc(newUser);
-        localStorage.setItem("accessToken", user.accessToken);
-        localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
-        navigate("/");
-      } else {
-        if (docs?.docs.length === 0) {
-          await addDoc(collection(db, "users"), {
-            uid: user.uid,
-            name: user.displayName,
-            authProvider: "google",
-            email: user.email,
-            profile: user.photoURL,
-          });
-        }
-        if (user) {
+      getUserId(user).then(async (res) => {
+        if (res.userID) {
+          localStorage.setItem("userDocumentID", res.userID);
+          const newUser = doc(db, "users", res.userID);
+          const docSnap = await getDoc(newUser);
           localStorage.setItem("accessToken", user.accessToken);
-          const obj = {
-            uid: user.uid,
-            name: user.displayName,
-            mobNo: user.phoneNumber,
-            authProvider: "google",
-            email: user.email,
-            profile: user.photoURL,
-          };
-          localStorage.setItem("currentUser", JSON.stringify(obj));
+          localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
           navigate("/");
+        } else {
+          if (res.docs?.docs.length === 0) {
+            const obj = {
+              uid: user.uid,
+              name: user.displayName,
+              mobNo: user.phoneNumber,
+              authProvider: "google",
+              email: user.email,
+              profile: user.photoURL,
+              publishFormLinks: 0,
+              appFormLinks: 0,
+              totalApps: 0,
+            };
+            await addDoc(collection(db, "users"), obj);
+            localStorage.setItem("userDocumentID", res.userID);
+            localStorage.setItem("accessToken", user.accessToken);
+            localStorage.setItem("currentUser", JSON.stringify(obj));
+            navigate("/");
+          }
         }
-      }
+      });
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
   };
 
-  const logInWithEmailAndPassword = async (e) => {
+  const logInWithEmailAndPassword = (e) => {
     e.preventDefault();
     setLoader(true);
-    try {
-      let { userData } = getUserId(logUser);
-      const res = await signInWithEmailAndPassword(
-        auth,
-        logUser.email,
-        logUser.password
-      );
-      const user = res.user;
-      localStorage.setItem("accessToken", user.accessToken);
-      setLoader(false);
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
+    signInWithEmailAndPassword(auth, logUser.email, logUser.password)
+      .then((res) => {
+        const user = res.user;
+        getUserId(user).then(async (result) => {
+          if (result.str !== "") {
+            alert("User doesn't exist");
+          } else {
+            const newUser = doc(db, "users", result.userID);
+            const docSnap = await getDoc(newUser);
+            localStorage.setItem("userDocumentID", result.userID);
+            localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
+            localStorage.setItem("accessToken", user.accessToken);
+            setLoader(false);
+            navigate("/");
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err.code);
+        console.log(err.message);
+      });
     setLoader(false);
   };
   const onHandleChange = (e) => {

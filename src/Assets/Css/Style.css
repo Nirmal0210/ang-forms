@@ -26,10 +26,6 @@ input[type="file"] {
   color: #2374AB !important;
 }
 
-.active i {
-  color: #2374AB !important;
-}
-
 .active p {
   color: #2374AB !important;
 }
@@ -553,13 +549,26 @@ input[type="file"] {
 }
 
 .publish-btn {
-  width: 140px !important;
+  width: 120px !important;
   height: 40px !important;
   font-size: 15px;
   background: #2374AB !important;
   border-radius: 5px;
   border: none;
   color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.preview-btn {
+  width: 120px !important;
+  height: 40px !important;
+  font-size: 15px;
+  background: white !important;
+  border-radius: 5px;
+  border: none;
+  color: #2374AB !important;
   display: flex;
   align-items: center;
   justify-content: center
@@ -622,6 +631,21 @@ input[type="file"] {
   margin-left: 5px
 }
 
+.choice-box {
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+
+.choice-sub-box {
+  width: 202px;
+}
+
+.choice-sub-box p {
+  text-align: start !important;
+}
+
 /* ====================================== */
 /* ========= Form Builder End ========= */
 /* ====================================== */
@@ -664,7 +688,13 @@ input[type="file"] {
 /* ====================================== */
 /* ========= Response Page Start ========= */
 /* ====================================== */
-
+.small-button {
+  border: none;
+  border-radius: 5px;
+  background-color: #2374AB;
+  color: white;
+  padding: 5px;
+}
 
 .download-btn {
   width: 160px;
@@ -789,6 +819,16 @@ input[type="file"] {
   justify-content: center;
 }
 
+.notification-userbox-sm {
+  width: 40px;
+  height: 40px;
+  background: #326273;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .notification-box {
   padding: 1rem;
   border-radius: 20px;
@@ -864,6 +904,10 @@ input[type="file"] {
 .react-tabs__tab--selected {
   padding-left: 15px;
   background: rgba(35, 116, 171, 0.2);
+  color: rgba(35, 116, 171, 1);
+}
+
+.react-tabs__tab--selected p {
   color: rgba(35, 116, 171, 1);
 }
 
@@ -1097,6 +1141,12 @@ input[type="file"] {
 .alert-success {
   background-color: #2374AB !important;
   border-color: #2374AB !important;
+  color: white !important;
+}
+
+.alert-danger {
+  background-color: #d12727 !important;
+  border-color: #d12727 !important;
   color: white !important;
 }
 

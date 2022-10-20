@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ActionPopup from "../../Components/ActionPopup";
+import ActionPopup from "../../Components/DeleteApp";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
@@ -38,7 +38,7 @@ const EditProfile = () => {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
     });
     setIsUpdate(!isUpdate);
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const changePassword = () => {
@@ -81,30 +81,28 @@ const EditProfile = () => {
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="tab-icon bi bi-person-circle" />
-                <p className="subtitle-black response ms-1">Manage profile</p>
+                <p className="subtitle-black ms-1">Manage profile</p>
               </div>
               <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="tab-icon bi bi-arrow-repeat" />
-                <p className="subtitle-black response ms-1">
-                  Manage subscription
-                </p>
+                <p className="subtitle-black ms-1">Manage subscription</p>
               </div>
               <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="tab-icon bi bi-puzzle" />
-                <p className="subtitle-black response ms-1">Manage Add ons</p>
+                <p className="subtitle-black ms-1">Manage Add ons</p>
               </div>
               <i className="bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="bi bi-wallet2 tab-icon"></i>
-                <p className="subtitle-black response ms-1">
+                <p className="subtitle-black ms-1">
                   Manage Payment methods
                 </p>
               </div>
@@ -114,7 +112,7 @@ const EditProfile = () => {
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="bi bi-key tab-icon"></i>
-                <p className="subtitle-black response ms-1">Change Password</p>
+                <p className="subtitle-black ms-1">Change Password</p>
               </div>
               <i className="bi bi-chevron-right" />
             </Tab>

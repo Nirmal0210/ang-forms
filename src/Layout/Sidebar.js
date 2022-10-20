@@ -67,42 +67,40 @@ const Sidebar = () => {
         </div>
         <div>
           <NavLink
-            activeClassName="active"
-            to="/"
+            activeclassname="active"
+            to="/dashboard"
             className="d-flex align-items-center mt-3"
           >
             <i className="bi bi-columns me-3" />
-            {!toggle && <div className="body-black">Dashboard</div>}
+            {!toggle && <p className="body-black">Dashboard</p>}
           </NavLink>
-          <NavLink className="d-flex align-items-center dropdown mt-1">
-            <button
-              className="dropbtn p-0 sidebar-drop"
-              onClick={() => setIsDrop(!isDrop)}
-            >
-              <i
-                style={{ fontSize: "19px" }}
-                className="me-3 bi bi-clipboard-check"
-              ></i>
-              {!toggle && (
-                <div className="body-black">
-                  Forms{" "}
-                  <span>
-                    {isDrop ? (
-                      <i className="bi bi-chevron-up ms-1"></i>
-                    ) : (
-                      <i className="bi bi-chevron-down ms-1"></i>
-                    )}
-                  </span>
-                </div>
-              )}
-            </button>
+          <NavLink
+            className="d-flex align-items-center mt-1"
+            onClick={() => setIsDrop(!isDrop)}
+          >
+            <i
+              style={{ fontSize: "19px" }}
+              className="me-3 bi bi-clipboard-check text-dark"
+            ></i>
+            {!toggle && (
+              <div className="body-black">
+                Forms{" "}
+                <span>
+                  {isDrop ? (
+                    <i className="bi bi-chevron-up ms-1"></i>
+                  ) : (
+                    <i className="bi bi-chevron-down ms-1"></i>
+                  )}
+                </span>
+              </div>
+            )}
           </NavLink>
           {isDrop && (
             <>
               <NavLink
                 to="/appformlist"
-                activeClassName="active"
-                className="d-flex align-items-center mt-1"
+                activeclassname="active"
+                className="d-flex align-items-center mt-1 ms-2"
               >
                 <i
                   style={{ fontSize: "19px" }}
@@ -112,8 +110,8 @@ const Sidebar = () => {
               </NavLink>
               <NavLink
                 to="/formlinklist"
-                activeClassName="active"
-                className="d-flex align-items-center mt-1"
+                activeclassname="active"
+                className="d-flex align-items-center mt-1 ms-2"
               >
                 <i
                   style={{ fontSize: "19px" }}
@@ -125,7 +123,7 @@ const Sidebar = () => {
           )}
           <NavLink
             to="/applist"
-            activeClassName="active"
+            activeclassname="active"
             className="d-flex align-items-center mt-1"
           >
             <i className="me-3 bi bi-joystick"></i>
@@ -133,7 +131,7 @@ const Sidebar = () => {
           </NavLink>
           <NavLink
             to="/responses"
-            activeClassName="active"
+            activeclassname="active"
             className="d-flex align-items-center mt-1"
           >
             <i className="me-3 bi bi-chat-left-text"></i>
@@ -141,22 +139,22 @@ const Sidebar = () => {
           </NavLink>
           <NavLink
             to="/editprofile"
-            activeClassName="active"
+            activeclassname="active"
             className="d-flex align-items-center mt-1"
           >
             <i className="me-3 bi bi-person"></i>
             {!toggle && <p className="body-black">Profile</p>}
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/settings"
-            activeClassName="active"
+            activeclassname="active"
             className="d-flex align-items-center mt-1"
           >
             <i className="me-3 bi bi-gear"></i>
             {!toggle && <p className="body-black">Settings</p>}
-          </NavLink>
+          </NavLink> */}
         </div>
-        {!toggle && (
+        {/* {!toggle && (
           <div className="d-flex justify-content-center mt-1">
             <div className="mobile-box text-center p-2">
               <img src={require("../Assets/Images/mobile.png")} alt="mobile" />
@@ -171,7 +169,7 @@ const Sidebar = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

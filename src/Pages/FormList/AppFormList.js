@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import ActionPopup from "../../Components/ActionPopup";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import NoDataFound from "../../Components/NoDataFound";
 import ViewDetails from "../../Components/ViewDetails";
+import DeleteAppForm from "../../Components/DeleteAppForm";
 const AppFormList = () => {
+  const navigate = useNavigate();
+  const [isDeleted, setIsDeleted] = useState(false);
   const [loader, setLoader] = useState(false);
   const [appList, setAppList] = useState([]);
-
+  const [tempIndex, setTempIndex] = useState()
   useEffect(() => {
     const getData = async () => {
       setLoader(true);
@@ -29,60 +31,24 @@ const AppFormList = () => {
         });
       });
       setLoader(false);
+      setTimeout(() => {
+        setIsDeleted(false)
+      }, [1000])
     };
     getData();
-  }, []);
+  }, [isDeleted]);
 
   return (
     <div className="p-4 extra-pad">
+      {isDeleted && <div className="alert alert-danger" role="alert">
+        App Form has been deleted successfully !!!
+      </div>}
       <div className="row g-0 g-lg-2 p-0 d-flex align-items-center">
-        <div className="col-3 text-start">
-          <div className="input-group border-0 rounded">
-            <span
-              className="input-group-text p-2 bg-white border-0"
-              id="basic-addon1"
-            >
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control border-0 subtitle-black ps-0"
-              placeholder="Search for forms, app names, etc"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-        </div>
-        <div className="col-1">
-          <div className="bg-white d-flex p-2 align-items-center border-0 rounded">
-            <i className="bi bi-funnel"></i>
-            <p className="subtitle-black ms-2">Filters</p>
-          </div>
-        </div>
-        <div className="col-2"></div>
-        <div className="col-6 d-flex justify-content-end">
-          <div className="dropdown">
-            <button className="dropbtn">
-              <span className="me-1">
-                <i className="bi bi-download" style={{ fontSize: "19px" }} />
-              </span>
-              Download
-            </button>
-            <div className="dropdown-content">
-              <Link to="/" className="d-flex align-items-center">
-                <span style={{ fontSize: "20px" }}>
-                  <i className="bi bi-filetype-pdf"></i>
-                </span>
-                <p className="subtitle-black ms-2">PDF format</p>
-              </Link>
-              <Link to="/" className="d-flex align-items-center">
-                <span style={{ fontSize: "20px" }}>
-                  <i className="bi bi-file-earmark-excel"></i>
-                </span>
-                <p className="subtitle-black ms-2">Excel format</p>
-              </Link>
-            </div>
-          </div>
-          <button className="download-btn ms-3">
+        <div className="col-12 d-flex justify-content-end">
+          <button
+            className="download-btn ms-3"
+            onClick={() => navigate("/formdialog")}
+          >
             New Form
             <span className="ms-2">
               <i className="bi bi-plus-lg" style={{ fontSize: "19px" }} />
@@ -126,24 +92,49 @@ const AppFormList = () => {
                         Responses
                       </th>
                       <th scope="col" className="body-black fw-bold"></th>
-                      <th scope="col" className="body-black fw-bold"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {appList.map((item, index) => (
-                      <tr key={index}>
-                        <td className="subtitle-black">{item?.formId}</td>
-                        <td className="subtitle-black">{item?.formName}</td>
-                        <td className="subtitle-black">Random App Name</td>
-                        <td className="subtitle-black">2</td>
-                        <td className="subtitle-black response">1500</td>
-                        <td className="subtitle-black">
-                          <ViewDetails data={item} />
-                        </td>
-                        <td className="subtitle-black">
-                          <ActionPopup />
-                        </td>
-                      </tr>
+                      <>
+                        <tr
+                          key={index}
+                          class="accordion-toggle collapsed"
+                          id="accordion1"
+                          data-toggle="collapse"
+                          data-parent="#accordion1"
+                          href="#collapseOne"
+                        >
+                          <td className="subtitle-black">{item?.formId}</td>
+                          <td className="subtitle-black">{item?.formName}</td>
+                          <td className="subtitle-black">Random App Name</td>
+                          <td className="subtitle-black">2</td>
+                          <td className="subtitle-black response">
+                            <button className="small-button">
+                              View
+                              <span>
+                                <i className="ms-1 bi bi-chevron-right" />
+                              </span>
+                            </button>
+                          </td>
+                          <td className="subtitle-black d-flex">
+                            <ViewDetails data={item} />
+                            <DeleteAppForm
+                              data={item}
+                              isDeleted={isDeleted}
+                              setIsDeleted={setIsDeleted}
+                            />
+                            <i
+                              className="bi bi-bar-chart-fill expand-button"
+                              style={{ fontSize: "15px" }}
+                              onClick={() => index !== tempIndex ? setTempIndex(index) : setTempIndex(null)}
+                            ></i>
+                          </td>
+                        </tr>
+                        {tempIndex === index && <tr>
+                          Hidden Row
+                        </tr>}
+                      </>
                     ))}
                   </tbody>
                 </table>

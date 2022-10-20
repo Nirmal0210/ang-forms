@@ -1,22 +1,24 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import RandomBackground from "../Components/RandomBackground";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
+import { useLocation, useNavigate } from "react-router-dom";
+import RandomBackground from "../Components/RandomBackground";
+import NotificationPopup from "../Components/NotificationPopup";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [dateTime, setDateTime] = useState();
+  const [showNotification, setShowNotification] = useState(false);
   const [currentUser] = useState(
     JSON.parse(localStorage.getItem("currentUser"))
   );
+
   const logout = () => {
     auth.signOut();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("currentUser");
     localStorage.removeItem("userDocumentID");
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -56,17 +58,17 @@ const Header = () => {
           >
             <ul className="navbar-nav">
               <li className="nav-item">
-                <div
-                  className="nav-link"
-                >
-                  {dateTime && dateTime}
-                </div>
+                <div className="nav-link">{dateTime && dateTime}</div>
               </li>
 
               <li className="nav-item ms-3">
-                <div className="nav-link">
+                {/* <div
+                  className="nav-link"
+                  onClick={() => setShowNotification(!showNotification)}
+                >
                   <i className="bi bi-bell-fill"></i>
-                </div>
+                </div> */}
+                <NotificationPopup />
               </li>
               <li className="nav-item d-flex align-items-center ms-3">
                 {currentUser && (

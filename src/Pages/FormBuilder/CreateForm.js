@@ -13,6 +13,7 @@ import {
 import PropertyConfiguration from "./PropertyConfiguration";
 import PublishModel from "../../Components/PublishModel";
 const CreateForm = () => {
+  const navigate = useNavigate();
   const [formName, setFormName] = useState("Form1");
   const [url, setUrl] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -24,7 +25,6 @@ const CreateForm = () => {
   const { appKey, appName, checkedValue } = state;
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const onHandleChange = (value) => {
     setFormName(value);
@@ -46,6 +46,11 @@ const CreateForm = () => {
   const removeItem = (i) => {
     const data = currentFormData.filter((item, index) => index !== i);
     setCurrentFormData(data);
+  };
+  const goToPreview = () => {
+    navigate("/preview", {
+      state: { formDataJSON: JSON.stringify(currentFormData[0]), appKey: appKey },
+    });
   };
   const publishForm = async () => {
     let userID = localStorage.getItem("userDocumentID");
@@ -78,7 +83,8 @@ const CreateForm = () => {
               localStorage.setItem("currentUser", JSON.stringify(currentUser));
             });
             setIsSuccessful(true);
-            navigate(`/preview/${userID}/${docRef.id}`);
+            // navigate(`/preview/${userID}/${docRef.id}`);
+            navigate("/dashboard");
           })
           .catch(() => {
             setIsError(true);
@@ -125,7 +131,8 @@ const CreateForm = () => {
               localStorage.setItem("currentUser", JSON.stringify(currentUser));
             });
             setIsSuccessful(true);
-            navigate(`/preview/${userID}/${appKey}/${docRef.id}`);
+            navigate("/dashboard");
+            // navigate(`/preview/${userID}/${appKey}/${docRef.id}`);
           })
           .catch(() => {
             setIsError(true);
@@ -207,54 +214,53 @@ const CreateForm = () => {
           </div>
           <div className="col-9 bg p-3">
             <div className="row g-1 p-2">
-              <div className="col-9 fw-bold heading-black">
+              <label className="form-label fw-bold heading-black">
+                Form Name
+              </label>
+              <div className="col-12 fw-bold heading-black">
                 <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">
-                    Form Name
-                  </label>
-                  <div className="d-flex align-items-center">
-                    <input
-                      readOnly={!isEditable}
-                      type="text"
-                      className="form-control"
-                      value={formName}
-                      onChange={(e) => onHandleChange(e.target.value)}
-                      placeholder="Enter Form Name"
-                    />
-                    <button
-                      className="button-pencil"
-                      onClick={() => setIsEditable(!isEditable)}
-                    >
-                      {isEditable ? (
-                        <i className="bi bi-check-lg"></i>
-                      ) : (
-                        <i className="bi bi-pencil-fill"></i>
-                      )}
-                    </button>
+                  <div className="row">
+                    <div className="col-3">
+                      <input
+                        readOnly={!isEditable}
+                        type="text"
+                        className="form-control"
+                        value={formName}
+                        onChange={(e) => onHandleChange(e.target.value)}
+                        onClick={() => setIsEditable(true)}
+                        placeholder="Enter Form Name"
+                        onBlur={() => setIsEditable(false)}
+                      />
+                    </div>
+                    <div className="col-9 d-flex justify-content-end">
+                      <button className="preview-btn btn" onClick={goToPreview}>
+                        Preview
+                      </button>
+                      <button
+                        className="publish-btn btn ms-2"
+                        disabled={currentFormData.length < 1 || toggle}
+                        type="button"
+                        onClick={() => publishForm()}
+                      >
+                        {!toggle ? (
+                          "Publish"
+                        ) : (
+                          <div className="d-flex align-items-center">
+                            <div
+                              className="spinner-border small-spin text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                            <p className="ms-2">Publishing...</p>
+                          </div>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-3 d-flex justify-content-center">
-                <button
-                  className="publish-btn btn"
-                  disabled={currentFormData.length < 1 || toggle}
-                  type="button"
-                  onClick={() => publishForm()}
-                >
-                  {!toggle ? (
-                    "Publish"
-                  ) : (
-                    <div className="d-flex align-items-center">
-                      <div
-                        className="spinner-border small-spin text-light"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                      <p className="ms-2">Publishing...</p>
-                    </div>
-                  )}
-                </button>
               </div>
             </div>
             <div className="row g-2">

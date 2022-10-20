@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ActionPopup from "../../Components/ActionPopup";
+import DeleteApp from "../../Components/DeleteApp";
 import {
   collection,
   doc,
@@ -9,10 +9,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useEffect } from "react";
-import NoDataFound from "../../Components/NoDataFound";
 import { getUserId } from "../../Config/Setting";
+import NoAppFound from "../../Components/NoFormFound";
+
 const AppList = () => {
+  const [isDeleted, setIsDeleted] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [submitLoader, setSubmitLoader] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [appName, setAppName] = useState("");
   const [packageId, setPackageId] = useState("");
@@ -32,6 +35,7 @@ const AppList = () => {
   };
 
   const onSubmit = async () => {
+    setSubmitLoader(true);
     const docData = {
       appName: appName,
       platForm: checkedValue,
@@ -47,6 +51,7 @@ const AppList = () => {
           setTimeout(() => {
             setIsSuccessful(false);
           }, 2000);
+          setSubmitLoader(false);
           getData();
         })
         .catch((error) => {
@@ -55,23 +60,25 @@ const AppList = () => {
           setTimeout(() => {
             setIsError(false);
           }, 2000);
+          setSubmitLoader(false);
         });
     });
   };
   const getData = async () => {
     setLoader(true);
-    setAppList([]);
     let documentID = localStorage.getItem("userDocumentID");
     const querySnapshotTemp = await getDocs(
       collection(db, `users/${documentID}/apps`)
     );
     let counter = 0;
+    let tempArray = [];
     querySnapshotTemp.forEach((doc) => {
       let obj = doc.data();
       obj.appKey = doc.id;
       counter += 1;
-      setAppList([...appList, obj]);
+      tempArray.push(obj);
     });
+    setAppList(tempArray);
     const user = doc(db, "users", localStorage.getItem("userDocumentID"));
     await updateDoc(user, {
       totalApps: counter,
@@ -83,7 +90,7 @@ const AppList = () => {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [isDeleted]);
 
   return modalShow ? (
     <div className="modalBackground">
@@ -180,7 +187,17 @@ const AppList = () => {
           >
             Cancel
           </button>
-          <button onClick={() => onSubmit()}>Continue</button>
+          <button onClick={() => onSubmit()}>
+            {submitLoader ? (
+              <div className="d-flex align-items-center">
+                <div className="spinner-border text-light" role="status">
+                  <span className="visually-hidden"></span>
+                </div>
+              </div>
+            ) : (
+              "Continue"
+            )}
+          </button>
         </div>
       </div>
     </div>
@@ -321,7 +338,11 @@ const AppList = () => {
                             )}
                           </td>
                           <td className="subtitle-black">
-                            <ActionPopup />
+                            <DeleteApp
+                              docId={item.appKey}
+                              isDeleted={isDeleted}
+                              setIsDeleted={setIsDeleted}
+                            />
                           </td>
                         </tr>
                       ))}
@@ -329,7 +350,7 @@ const AppList = () => {
                   </table>
                 </div>
               ) : (
-                <NoDataFound />
+                <NoAppFound />
               )}
             </div>
           </div>

@@ -25,7 +25,7 @@ const Login = () => {
           const docSnap = await getDoc(newUser);
           localStorage.setItem("accessToken", user.accessToken);
           localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
-          navigate("/");
+          navigate("/dashboard");
         } else {
           if (res.docs?.docs.length === 0) {
             const obj = {
@@ -43,7 +43,7 @@ const Login = () => {
             localStorage.setItem("userDocumentID", res.userID);
             localStorage.setItem("accessToken", user.accessToken);
             localStorage.setItem("currentUser", JSON.stringify(obj));
-            navigate("/");
+            navigate("/dashboard");
           }
         }
       });
@@ -69,7 +69,7 @@ const Login = () => {
             localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
             localStorage.setItem("accessToken", user.accessToken);
             setLoader(false);
-            navigate("/");
+            navigate("/dashboard");
           }
         });
       })

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import ActionPopup from "../../Components/ActionPopup";
-import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import NoDataFound from "../../Components/NoDataFound";
+import DeletePublishForm from "../../Components/DeletePublishForm";
+import { useNavigate } from "react-router-dom";
 
 const FormLinkList = () => {
+  const navigate = useNavigate()
   const [loader, setLoader] = useState(false);
   const [formLinkList, setFormLinkList] = useState([]);
-
+  const [isDeleted, setIsDeleted] = useState(false)
+  const [tempIndex, setTempIndex] = useState()
   useEffect(() => {
     const getData = async () => {
       setLoader(true);
@@ -25,69 +27,22 @@ const FormLinkList = () => {
         setFormLinkList([...formLinkList]);
       });
       setLoader(false);
+      setTimeout(() => {
+        setIsDeleted(false)
+      }, [1000])
     };
     getData();
-  }, []);
+  }, [isDeleted]);
   return (
     <div className="p-4 extra-pad">
+      {isDeleted && <div className="alert alert-danger" role="alert">
+        Publishable Form has been deleted successfully !!!
+      </div>}
       <div className="row g-0 g-lg-2 p-0 d-flex align-items-center">
-        <div className="col-3 text-start">
-          <div className="input-group border-0 rounded">
-            <span
-              className="input-group-text p-2 bg-white border-0"
-              id="basic-addon1"
-            >
-              <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control border-0 subtitle-black ps-0"
-              placeholder="Search for forms, app names, etc"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-        </div>
-        <div className="col-1">
-          <div className="input-group border-0 rounded">
-            <span
-              className="input-group-text p-2 bg-white border-0"
-              id="basic-addon1"
-            >
-              <i className="bi bi-funnel"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control border-0 subtitle-black ps-0"
-              placeholder="Filters"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-        </div>
-        <div className="col-2"></div>
-        <div className="col-6 d-flex justify-content-end">
-          <div className="dropdown">
-            <button className="dropbtn">
-              <span className="me-1">
-                <i className="bi bi-download" style={{ fontSize: "19px" }} />
-              </span>
-              Download
-            </button>
-            <div className="dropdown-content">
-              <Link to="/" className="d-flex align-items-center">
-                <span style={{ fontSize: "20px" }}>
-                  <i className="bi bi-filetype-pdf"></i>
-                </span>
-                <p className="subtitle-black ms-2">PDF format</p>
-              </Link>
-              <Link to="/" className="d-flex align-items-center">
-                <span style={{ fontSize: "20px" }}>
-                  <i className="bi bi-file-earmark-excel"></i>
-                </span>
-                <p className="subtitle-black ms-2">Excel format</p>
-              </Link>
-            </div>
-          </div>
-          <button className="download-btn ms-3">
+        <div className="col-12 d-flex justify-content-end">
+          <button className="download-btn ms-3"
+            onClick={() => navigate("/formdialog")}
+          >
             New Form
             <span className="ms-2">
               <i className="bi bi-plus-lg" style={{ fontSize: "19px" }} />
@@ -136,21 +91,32 @@ const FormLinkList = () => {
                   </thead>
                   <tbody>
                     {formLinkList.map((item, index) => (
-                      <tr key={index}>
-                        <td className="subtitle-black">{item?.formId}</td>
-                        <td className="subtitle-black">{item?.formName}</td>
-                        <td className="subtitle-black response">
-                          <p className="text-ellipsis">{item?.formUrl}</p>
-                        </td>
-                        <td className="subtitle-black">{item?.impressions}</td>
-                        <td className="subtitle-black">{item?.responses}</td>
-                        {/* <td className="subtitle-black">
-                          <ViewDetails data={item} />
-                        </td> */}
-                        <td className="subtitle-black">
-                          <ActionPopup />
-                        </td>
-                      </tr>
+                      <>
+                        <tr key={index}>
+                          <td className="subtitle-black">{item?.formId}</td>
+                          <td className="subtitle-black">{item?.formName}</td>
+                          <td className="subtitle-black response">
+                            <p className="text-ellipsis">{item?.formUrl}</p>
+                          </td>
+                          <td className="subtitle-black">{item?.impressions}</td>
+                          <td className="subtitle-black">{item?.responses}</td>
+                          <td className="subtitle-black d-flex">
+                            <DeletePublishForm
+                              data={item}
+                              isDeleted={isDeleted}
+                              setIsDeleted={setIsDeleted}
+                            />
+                            <i
+                              className="bi bi-bar-chart-fill expand-button"
+                              style={{ fontSize: "15px" }}
+                              onClick={() => index !== tempIndex ? setTempIndex(index) : setTempIndex(null)}
+                            ></i>
+                          </td>
+                        </tr>
+                        {tempIndex === index && <tr>
+                          Hidden Row
+                        </tr>}
+                      </>
                     ))}
                   </tbody>
                 </table>
@@ -160,8 +126,8 @@ const FormLinkList = () => {
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

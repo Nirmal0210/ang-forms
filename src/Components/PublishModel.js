@@ -11,7 +11,7 @@ const PublishModel = ({ url }) => {
         <div className="titleCloseBtn">
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/dashboard");
             }}
           >
             <i className="bi bi-x"></i>
@@ -54,7 +54,7 @@ const PublishModel = ({ url }) => {
         <div className="footer">
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/dashboard");
             }}
           >
             Continue

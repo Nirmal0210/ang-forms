@@ -27,7 +27,7 @@ const Signup = () => {
           const docSnap = await getDoc(newUser);
           localStorage.setItem("accessToken", user.accessToken);
           localStorage.setItem("currentUser", JSON.stringify(docSnap.data()));
-          navigate("/");
+          navigate("/dashboard");
         } else {
           if (res.docs?.docs.length === 0) {
             const obj = {
@@ -45,7 +45,7 @@ const Signup = () => {
             localStorage.setItem("userDocumentID", res.userID);
             localStorage.setItem("accessToken", user.accessToken);
             localStorage.setItem("currentUser", JSON.stringify(obj));
-            navigate("/");
+            navigate("/dashboard");
           }
         }
       });
@@ -91,7 +91,7 @@ const Signup = () => {
                 totalApps: 0,
               };
               localStorage.setItem("currentUser", JSON.stringify(obj));
-              navigate("/");
+              navigate("/dashboard");
             }
           })
           .catch((err) => {

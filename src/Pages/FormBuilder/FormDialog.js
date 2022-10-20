@@ -63,31 +63,55 @@ const FormDialog = () => {
         <div className="text-center rounded bg-white p-4">
           <div className="body-large-black fw-bold text-start">Questions</div>
           <div className="d-flex justify-content-center mb-3">
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                checked={checkedValue === "appWebsiteForm"}
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                onChange={() => setCheckedValue("appWebsiteForm")}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault1">
-                App / Website Form
-              </label>
+            <div
+              className="d-flex align-items-center choice-box"
+              style={{
+                border:
+                  checkedValue == "appWebsiteForm"
+                    ? "1px solid #2374AB"
+                    : "1px solid gray",
+              }}
+              onClick={() => setCheckedValue("appWebsiteForm")}
+            >
+              <div className="choice-sub-box">
+                <p className="body-large-black fw-bold">App / Website Form</p>
+                <p className="subtitle-black">This function will create form</p>
+              </div>
+              <div className="text-start ms-2">
+                <input
+                  className="form-check-input"
+                  checked={checkedValue === "appWebsiteForm"}
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                />
+              </div>
             </div>
-            <div className="form-check mx-2">
-              <input
-                className="form-check-input"
-                type="radio"
-                checked={checkedValue === "publishableForm"}
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-                onChange={() => setCheckedValue("publishableForm")}
-              />
-              <label className="form-check-label" htmlFor="flexRadioDefault2">
-                Publishable Form Link
-              </label>
+            <div
+              className="d-flex align-items-center choice-box"
+              style={{
+                border:
+                  checkedValue === "publishableForm"
+                    ? "1px solid #2374AB"
+                    : "1px solid gray",
+              }}
+              onClick={() => setCheckedValue("publishableForm")}
+            >
+              <div className="choice-sub-box">
+                <p className="body-large-black fw-bold">
+                  Publishable Form Link
+                </p>
+                <p className="subtitle-black">This function will create form</p>
+              </div>
+              <div className="text-start ms-2">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  checked={checkedValue === "publishableForm"}
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                />
+              </div>
             </div>
           </div>
           {checkedValue === "appWebsiteForm" && (
@@ -100,21 +124,24 @@ const FormDialog = () => {
                   className="form-select"
                   aria-label="Default select example"
                 >
-                  <option defaultValue={0}>Select App / Website</option>
+                  <option defaultValue={0}>Select AppKey</option>
                   {appList.length > 0 &&
                     appList.map((item, index) => (
                       <option
                         value={item.appKey + " " + item.appName}
                         key={index}
                       >
-                        {item.appKey}
+                        {item.appName + "     " + "(" + item.appKey + ")"}
                       </option>
                     ))}
                 </select>
               </div>
             </div>
           )}
-          <div className="d-flex justify-content-center">
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "13rem", marginBottom: "4rem" }}
+          >
             <button className="download-btn" onClick={() => goToPage()}>
               Continue
             </button>

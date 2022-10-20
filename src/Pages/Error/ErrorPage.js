@@ -17,7 +17,7 @@ const ErrorPage = () => {
           <p className="big-title-black mt-3 fw-bold">ERROR 404</p>
           <p className="heading-black mt-3">Something went wrong!</p>
           <div className="d-flex justify-content-center mt-5">
-            <button className="sidebar-btn" onClick={() => navigate("/")}>
+            <button className="sidebar-btn" onClick={() => navigate("/dashboard")}>
               Back to homepage
             </button>
           </div>

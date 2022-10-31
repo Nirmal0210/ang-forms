@@ -2,27 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDrN190LLWjCW-tsBuM95KOiA1hN9qHNU0",
-  authDomain: "ang-forms.firebaseapp.com",
-  projectId: "ang-forms",
-  storageBucket: "ang-forms.appspot.com",
-  messagingSenderId: "666000112161",
-  appId: "1:666000112161:web:36a482e2102eac49d20160",
-};
+ const firebaseConfig = {
+   apiKey: "AIzaSyCwfuAa_sxCTvP4NMI1TNf1ckK3jN_Lri0",
+   authDomain: "angforms-dev.firebaseapp.com",
+   projectId: "angforms-dev",
+   storageBucket: "angforms-dev.appspot.com",
+   messagingSenderId: "760406068573",
+   appId: "1:760406068573:web:950171de4950d88e55acb4",
+   measurementId: "G-PL41GEV6FE"
+ };
 
 let app = initializeApp(firebaseConfig);
 let auth = getAuth(app);
 let db = getFirestore(app);
 export { auth, db };
-
-// const sendPasswordReset = async (email) => {
-//   try {
-//     await sendPasswordResetEmail(auth, email);
-//     alert("Password reset link sent!");
-//   } catch (err) {
-//     console.error(err);
-//     alert(err.message);
-//   }
-// };
-

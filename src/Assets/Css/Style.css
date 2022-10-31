@@ -6,7 +6,9 @@ body {
   background: #f0f0f0;
   overflow-x: hidden;
 }
-
+button{
+  cursor: pointer !important;
+}
 p {
   margin-bottom: 0px;
 }
@@ -20,6 +22,32 @@ nav {
 
 input[type="file"] {
   display: none;
+}
+
+.dropdown-menu {
+  min-width: 7rem;
+  height: 40px;
+}
+
+.dropstart .dropdown-toggle::before {
+  content: none !important;
+}
+
+.dropstart .dropdown-menu[data-bs-popper] {
+  top: 55px !important;
+  left: -70px !important;
+}
+
+.dropdown-menu .btn-white {
+  margin-top: -7px;
+}
+
+.modal-backdrop.show {
+  opacity: 0 !important;
+}
+
+.modal-backdrop {
+  z-index: 0 !important;
 }
 
 .active {
@@ -1195,4 +1223,24 @@ input[type="file"] {
   margin: 0 !important;
   height: 1.5rem;
   width: 1.5rem;
+}
+
+.btn-logout {
+  background-color: #2374AB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 80px;
+  height: 40px;
+}
+
+.btn-cancel {
+  background-color: #ececec;
+  color: #2374AB;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 80px;
+  height: 40px;
 }

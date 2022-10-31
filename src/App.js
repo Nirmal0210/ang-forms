@@ -32,9 +32,9 @@ function App() {
               </PrivateRoute>
             </div>
           </>
-        ) : location.pathname === "/login" && currentUser ? (
+        ) : location.pathname === "/" && !currentUser ? (
           <Login />
-        ) : location.pathname === "/signup" && currentUser ? (
+        ) : location.pathname === "/signup" && !currentUser ? (
           <Signup />
         ) : (
           <Navigate to={"/dashboard"} replace />

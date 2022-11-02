@@ -7,12 +7,18 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { useForm } from "react-hook-form";
 import { getUserId } from "../../Config/Setting";
 const Login = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const [logUser, setLogUser] = useState({});
   const [loader, setLoader] = useState(false);
+
+  const onSubmit = (data) => {
+    logInWithEmailAndPassword(data)
+  }
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
@@ -53,8 +59,7 @@ const Login = () => {
     }
   };
 
-  const logInWithEmailAndPassword = (e) => {
-    e.preventDefault();
+  const logInWithEmailAndPassword = (logUser) => {
     setLoader(true);
     signInWithEmailAndPassword(auth, logUser.email, logUser.password)
       .then((res) => {
@@ -78,12 +83,6 @@ const Login = () => {
         console.log(err.message);
       });
     setLoader(false);
-  };
-  const onHandleChange = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    logUser[name] = value;
-    setLogUser({ ...logUser });
   };
 
   return (
@@ -128,16 +127,20 @@ const Login = () => {
           </div>
         </div>
         <div className="form-login">
-          <form onSubmit={logInWithEmailAndPassword}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
               <p className="body-black text-start">Email</p>
               <input
                 type="email"
                 className="form-control"
                 name="email"
-                value={logUser.email}
-                onChange={onHandleChange}
+                {...register("email",
+                  {
+                    required: true,
+                    pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                  })}
               />
+              {errors.email && <p className="text-danger">Please check the Email*</p>}
             </div>
             <div>
               <p className="body-black text-start">Password</p>
@@ -145,21 +148,25 @@ const Login = () => {
                 type="text"
                 className="form-control"
                 name="password"
-                value={logUser.password}
-                onChange={onHandleChange}
+                {...register("password", { required: true, minLength: 8 })}
               />
+              {errors.password && <p className="text-danger">Please check the Password</p>}
+
             </div>
 
             <p className="text-end link-text mb-4">Forgot Password?</p>
-            <button type="submit" className="btn-login">
-              {!loader ? (
-                "LOGIN"
-              ) : (
-                <div className="spinner-border text-light" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              )}
-            </button>
+            <div className="text-center">
+              <button type="submit" className="btn-login">
+                {!loader ? (
+                  "LOGIN"
+                ) : (
+                  <div className="spinner-border text-light" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                )}
+              </button>
+            </div>
+
           </form>
           <p className="py-4 text-center">OR</p>
           <button

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ActionPopup from "../../Components/DeleteApp";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
@@ -83,21 +82,21 @@ const EditProfile = () => {
                 <i className="tab-icon bi bi-person-circle" />
                 <p className="subtitle-black ms-1">Manage profile</p>
               </div>
-              <i className="bi bi-chevron-right" />
+              <i className="tab-icon bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="tab-icon bi bi-arrow-repeat" />
                 <p className="subtitle-black ms-1">Manage subscription</p>
               </div>
-              <i className="bi bi-chevron-right" />
+              <i className="tab-icon bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
                 <i className="tab-icon bi bi-puzzle" />
                 <p className="subtitle-black ms-1">Manage Add ons</p>
               </div>
-              <i className="bi bi-chevron-right" />
+              <i className="tab-icon bi bi-chevron-right" />
             </Tab>
             <Tab>
               <div className="d-flex align-items-center">
@@ -106,7 +105,7 @@ const EditProfile = () => {
                   Manage Payment methods
                 </p>
               </div>
-              <i className="bi bi-chevron-right" />
+              <i className="tab-icon bi bi-chevron-right" />
             </Tab>
             {/* {currentUser && currentUser.authProvider === "local" && ( */}
             <Tab>
@@ -114,7 +113,7 @@ const EditProfile = () => {
                 <i className="bi bi-key tab-icon"></i>
                 <p className="subtitle-black ms-1">Change Password</p>
               </div>
-              <i className="bi bi-chevron-right" />
+              <i className="tab-icon bi bi-chevron-right" />
             </Tab>
             {/* )} */}
           </TabList>
@@ -303,14 +302,16 @@ const EditProfile = () => {
                 <div className="col-6 col-lg-6">
                   <div className="subscription-box">
                     <div className="form-check-box mb-3">
-                      <div className="form-check d-flex align-items-center">
-                        <input
-                          className="form-check-input p-2"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault2"
-                          checked
-                        />
+                      <div className="form-check d-flex align-items-between align-items-center">
+                        <div>
+                          <input
+                            className="form-check-input p-2"
+                            type="radio"
+                            name="flexRadioDefault"
+                            id="flexRadioDefault2"
+                            checked
+                          />
+                        </div>
                         <div className="mx-3">
                           <label
                             className="form-check-label w-100"
@@ -422,16 +423,16 @@ const EditProfile = () => {
               <div className="row">
                 <div className="col-6 d-flex justify-content-around">
                   <div className="master-card">
-                    <p className="mb-4">Mastercard.</p>
-                    <p className="body-white mt-4">XXXX XXXX XXXX 5432</p>
-                    <div className="row mt-2">
+                    <p className="master-title">Mastercard</p>
+                    <p className="master-number">XXXX XXXX XXXX 5432</p>
+                    <div className="row">
                       <div className="col-6">
-                        <p className="body-white">Valid Thru</p>
-                        <p className="subtitle-white">10/12</p>
-                        <p className="body-white my-4">Cardholder Name</p>
+                        <p className="master-valid">Valid Thru</p>
+                        <p className="master-date">10/12</p>
+                        <p className="master-holdername">Cardholder Name</p>
                       </div>
                       <div className="col-6 text-end">
-                        <p className="body-white">Debit Card</p>
+                        <p className="master-type">Debit Card</p>
                         <img
                           src={require("../../Assets/Images/Mastercard.png")}
                           width="70px"
@@ -448,7 +449,7 @@ const EditProfile = () => {
                     <div className="add-card-circle">
                       <i
                         className="bi bi-plus-circle-fill"
-                        style={{ color: "#2374AB", fontSize: "30px" }}
+                        style={{ color: "#2374AB" }}
                       />
                     </div>
                   </div>
@@ -458,7 +459,7 @@ const EditProfile = () => {
                 Saved Cards
               </p>
               <div
-                className="mt-1 px-3 tableFixHeadCard"
+                className="mt-1 px-3"
                 style={{ maxHeight: "150px" }}
               >
                 <table className="table">
@@ -497,7 +498,7 @@ const EditProfile = () => {
                         </div>
                       </td>
                       <td className="subtitle-black">
-                        <ActionPopup />
+                        <i className="bi bi-trash" style={{ fontSize: "18px" }}></i>
                       </td>
                     </tr>
                     <tr>
@@ -515,7 +516,7 @@ const EditProfile = () => {
                         </div>
                       </td>
                       <td className="subtitle-black">
-                        <ActionPopup />
+                        <i className="bi bi-trash" style={{ fontSize: "18px" }}></i>
                       </td>
                     </tr>
                     <tr>
@@ -529,7 +530,7 @@ const EditProfile = () => {
                       <td className="subtitle-black">03/2023</td>
                       <td className="response subtitle-black">Make Primary</td>
                       <td className="subtitle-black">
-                        <ActionPopup />
+                        <i className="bi bi-trash" style={{ fontSize: "18px" }}></i>
                       </td>
                     </tr>
                     <tr>
@@ -543,7 +544,7 @@ const EditProfile = () => {
                       <td className="subtitle-black">03/2023</td>
                       <td className="response subtitle-black">Make Primary</td>
                       <td className="subtitle-black">
-                        <ActionPopup />
+                        <i className="bi bi-trash" style={{ fontSize: "18px" }}></i>
                       </td>
                     </tr>
                   </tbody>

@@ -8,13 +8,25 @@ import {
 } from "firebase/auth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getUserId } from "../../Config/Setting";
+import { useForm } from "react-hook-form";
+
 const Signup = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
-  const [logUser, setLogUser] = useState({});
+  const [email, setEmail] = useState('');
   const [agree, setAgree] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [loader, setLoader] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data) => {
+    setToggle(!toggle)
+    setEmail(data.email)
+  }
+  const onSubmitNew = (data) => {
+    registerWithEmailAndPassword(data)
+  }
+
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
@@ -54,8 +66,7 @@ const Signup = () => {
       alert(err.message);
     }
   };
-  const registerWithEmailAndPassword = async (e) => {
-    e.preventDefault();
+  const registerWithEmailAndPassword = async (logUser) => {
     if (logUser.password === logUser.confirmPassword) {
       setLoader(true);
       try {
@@ -97,23 +108,18 @@ const Signup = () => {
           .catch((err) => {
             console.log(err.code);
             console.log(err.message);
+            navigate("/")
           });
       } catch (err) {
         console.log(err.message);
         console.error(err);
+        navigate("/")
       }
-      setLogUser({});
       setAgree(false);
       setLoader(false);
     } else {
       alert("Password and Confirm password mismatched");
     }
-  };
-  const onHandleChange = (e) => {
-    let title = e.target.name;
-    let value = e.target.value;
-    logUser[title] = value;
-    setLogUser({ ...logUser });
   };
   return (
     <div className="row g-0">
@@ -157,20 +163,22 @@ const Signup = () => {
         {toggle ? (
           <div className="form-login">
             <div>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <p className="body-black text-start">Email</p>
                   <input
                     className="form-control"
                     name="email"
-                    value={logUser.email}
-                    onChange={(e) => onHandleChange(e)}
+                    {...register("email",
+                      {
+                        required: true,
+                        pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                      })}
                   />
+                  {errors.email && <p className="text-danger">Please check the Email*</p>}
                 </div>
-
                 <button
-                  type="button"
-                  onClick={() => setToggle(!toggle)}
+                  type="submit"
                   className="btn-signup"
                 >
                   Continue with Email
@@ -203,16 +211,17 @@ const Signup = () => {
           </div>
         ) : (
           <div className="mt-2 px-5">
-            <form className="row g-1" onSubmit={registerWithEmailAndPassword}>
+            <form className="row g-1" onSubmit={handleSubmit(onSubmitNew)}>
               <div className="mb-3 col-6">
                 <label className="form-label mb-0 body-black">Name</label>
                 <input
                   type="text"
                   className="form-control form-control-md"
                   name="name"
-                  value={logUser.name}
-                  onChange={(e) => onHandleChange(e)}
+                  {...register("name", { required: true })}
                 />
+                {errors.name && <p className="text-danger">Please check the Name*</p>}
+
               </div>
 
               <div className="mb-3 col-6">
@@ -222,19 +231,19 @@ const Signup = () => {
                 <input
                   type="tel"
                   name="mobNo"
-                  value={logUser.mobNo}
                   className="form-control form-control-md"
-                  onChange={(e) => onHandleChange(e)}
+                  {...register("mobNo", { required: true })}
                 />
+                {errors.mobNo && <p className="text-danger">Please check the Mobile Number*</p>}
               </div>
               <div className="mb-3 col-6">
                 <label className="form-label mb-0 body-black">Email ID</label>
                 <input
                   type="email"
-                  value={logUser.email || ""}
                   name="email"
+                  value={email}
+                  readOnly={true}
                   className="form-control form-control-md"
-                  onChange={(e) => onHandleChange(e)}
                 />
               </div>
               <div className="mb-3 col-6">
@@ -243,9 +252,10 @@ const Signup = () => {
                   type="text"
                   className="form-control form-control-md"
                   name="password"
-                  value={logUser.password}
-                  onChange={(e) => onHandleChange(e)}
+                  {...register("password", { required: true, minLength: 8 })}
                 />
+                {errors.password && <p className="text-danger">Please check the Password</p>}
+
               </div>
               <div className="mb-3 col-6">
                 <label className="form-label mb-0 body-black">
@@ -255,9 +265,11 @@ const Signup = () => {
                   type="text"
                   className="form-control form-control-md"
                   name="confirmPassword"
-                  value={logUser.confirmPassword}
-                  onChange={(e) => onHandleChange(e)}
+                  {...register("confirmPassword", { required: true, minLength: 8 })}
                 />
+
+                {errors.confirmPassword && <p className="text-danger">Please check the Confirm Password</p>}
+
               </div>
               <div className="form-check">
                 <input
@@ -266,13 +278,14 @@ const Signup = () => {
                   checked={agree}
                   onChange={(e) => setAgree(e.target.checked)}
                   id="exampleCheck1"
+
                 />
-                <label className="form-check-label" htmlhtmlFor="exampleCheck1">
+                <label className="form-check-label">
                   I agree to all the Terms & Privacy Policy
                 </label>
               </div>
               <div className="d-flex justify-content-center mt-2">
-                <button type="submit" className="btn-signup">
+                <button type="submit" className={`btn-signup ${!agree && "disabled"}`} disabled={!agree}>
                   {!loader ? (
                     "Register"
                   ) : (
@@ -284,7 +297,8 @@ const Signup = () => {
               </div>
             </form>
           </div>
-        )}
+        )
+        }
 
         <p className="body-black text-center py-4">
           Already have an account?{" "}
@@ -293,8 +307,8 @@ const Signup = () => {
             Sign in
           </NavLink>
         </p>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

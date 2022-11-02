@@ -2,7 +2,7 @@ import React from "react";
 const Responses = () => {
   return (
     <div className="p-4 extra-pad">
-      <div className="row g-0 g-lg-2 p-0 d-flex align-items-center">
+      <div className="row g-2 p-0 d-flex align-items-center">
         <div className="col-3 text-start">
           <div className="input-group border-0 rounded">
             <span
@@ -20,9 +20,9 @@ const Responses = () => {
           </div>
         </div>
         <div className="col-1">
-          <div className="bg-white d-flex p-2 align-items-center border-0 rounded">
+          <div className="filter-bg">
             <i className="bi bi-funnel"></i>
-            <p className="subtitle-black ms-2">Filters</p>
+            <p className="subtitle-black mx-2">Filters</p>
           </div>
         </div>
         <div className="col-6 d-flex justify-content-end">
@@ -49,8 +49,7 @@ const Responses = () => {
         <div className="col-1">
           <img
             src={require("../../Assets/Images/Response1.png")}
-            height={"90px"}
-            width={"90px"}
+            className="response-img"
             alt="response"
           />
         </div>
@@ -64,19 +63,19 @@ const Responses = () => {
           <p className="subtitle-black fw-bold">Ip address: </p>
           <p className="sm-black ms-1">126.205.209.101</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device: </p>
           <p className="sm-black ms-1">Mobile</p>
         </div>
-        <div className="col-2 d-flex align-items-center justify-content-center">
+        {/* <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device Info: </p>
           <p className="sm-black ms-1">Iphone Xs Max</p>
-        </div>
+        </div> */}
         <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Phone no:</p>
           <p className="sm-black ms-1">0123456789</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Browser:</p>
           <p className="sm-black ms-1">Safari</p>
         </div>
@@ -88,8 +87,7 @@ const Responses = () => {
         <div className="col-1">
           <img
             src={require("../../Assets/Images/Response1.png")}
-            height={"90px"}
-            width={"90px"}
+            className="response-img"
             alt="response"
           />
         </div>
@@ -103,19 +101,19 @@ const Responses = () => {
           <p className="subtitle-black fw-bold">Ip address: </p>
           <p className="sm-black ms-1">126.205.209.101</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device: </p>
           <p className="sm-black ms-1">Mobile</p>
         </div>
-        <div className="col-2 d-flex align-items-center justify-content-center">
+        {/* <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device Info: </p>
           <p className="sm-black ms-1">Iphone Xs Max</p>
-        </div>
+        </div> */}
         <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Phone no:</p>
           <p className="sm-black ms-1">0123456789</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Browser:</p>
           <p className="sm-black ms-1">Safari</p>
         </div>
@@ -127,8 +125,7 @@ const Responses = () => {
         <div className="col-1">
           <img
             src={require("../../Assets/Images/Response1.png")}
-            height={"90px"}
-            width={"90px"}
+            className="response-img"
             alt="response"
           />
         </div>
@@ -142,19 +139,19 @@ const Responses = () => {
           <p className="subtitle-black fw-bold">Ip address: </p>
           <p className="sm-black ms-1">126.205.209.101</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device: </p>
           <p className="sm-black ms-1">Mobile</p>
         </div>
-        <div className="col-2 d-flex align-items-center justify-content-center">
+        {/* <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device Info: </p>
           <p className="sm-black ms-1">Iphone Xs Max</p>
-        </div>
+        </div> */}
         <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Phone no:</p>
           <p className="sm-black ms-1">0123456789</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Browser:</p>
           <p className="sm-black ms-1">Safari</p>
         </div>
@@ -166,8 +163,7 @@ const Responses = () => {
         <div className="col-1">
           <img
             src={require("../../Assets/Images/Response1.png")}
-            height={"90px"}
-            width={"90px"}
+            className="response-img"
             alt="response"
           />
         </div>
@@ -181,19 +177,19 @@ const Responses = () => {
           <p className="subtitle-black fw-bold">Ip address: </p>
           <p className="sm-black ms-1">126.205.209.101</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device: </p>
           <p className="sm-black ms-1">Mobile</p>
         </div>
-        <div className="col-2 d-flex align-items-center justify-content-center">
+        {/* <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Device Info: </p>
           <p className="sm-black ms-1">Iphone Xs Max</p>
-        </div>
+        </div> */}
         <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Phone no:</p>
           <p className="sm-black ms-1">0123456789</p>
         </div>
-        <div className="col-1 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <p className="subtitle-black fw-bold">Browser:</p>
           <p className="sm-black ms-1">Safari</p>
         </div>

@@ -6,9 +6,11 @@ body {
   background: #f0f0f0;
   overflow-x: hidden;
 }
-button{
+
+button {
   cursor: pointer !important;
 }
+
 p {
   margin-bottom: 0px;
 }
@@ -83,6 +85,8 @@ input[type="file"] {
 }
 
 /* TABLE CSS */
+
+
 .tableFixHeadDash {
   table-layout: fixed;
   border-collapse: collapse;
@@ -370,6 +374,11 @@ input[type="file"] {
 /* ========================================== */
 /* Login Page */
 /* ========================================== */
+.log-image {
+  height: 450px;
+  width: 120%
+}
+
 .login-left {
   overflow-y: hidden;
   background: #2374AB;
@@ -429,6 +438,11 @@ input[type="file"] {
   height: 45px;
   border-radius: 5px;
   border: none;
+
+}
+
+.disabled {
+  opacity: 0.8 !important;
 }
 
 /* ========================== */
@@ -716,6 +730,20 @@ input[type="file"] {
 /* ====================================== */
 /* ========= Response Page Start ========= */
 /* ====================================== */
+.filter-bg {
+  background-color: white;
+  width: 80px;
+  border-radius: 5px;
+  display: flex;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+.response-img {
+  height: 90px;
+  width: 90px;
+}
+
 .small-button {
   border: none;
   border-radius: 5px;
@@ -991,6 +1019,7 @@ input[type="file"] {
   height: 60px;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 5px 10px !important;
 }
 
@@ -1032,6 +1061,33 @@ input[type="file"] {
   width: 350px;
 }
 
+.master-card .master-title {
+  font-size: 22px;
+}
+
+.master-card .master-number {
+  font-size: 16px;
+  margin: 15px 0px;
+}
+
+.master-card .master-valid {
+  font-size: 14px;
+}
+
+.master-card .master-date {
+  font-size: 14px;
+
+}
+
+.master-card .master-holdername {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.master-card .master-type {
+  font-size: 12px;
+}
+
 .master-card-dotted {
   padding: 1rem;
   border: 1px dashed rgba(35, 116, 171, 1);
@@ -1051,6 +1107,10 @@ input[type="file"] {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.add-card-circle i {
+  font-size: 30px;
 }
 
 .primary-box {
@@ -1244,3 +1304,250 @@ input[type="file"] {
   width: 80px;
   height: 40px;
 }
+
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+
+  /* fonts */
+  .big-title-white {
+    font-size: 28px;
+  }
+
+  .big-title-black {
+    font-size: 28px;
+  }
+
+  .title-white {
+    font-size: 25px;
+  }
+
+  .title-black {
+    font-size: 25px;
+  }
+
+  .heading-white {
+    font-size: 20px;
+  }
+
+  .heading-black {
+    font-size: 20px;
+  }
+
+  .body-large-white {
+    font-size: 12px;
+  }
+
+  .body-large-black {
+    font-size: 12px;
+  }
+
+  .body-black {
+    font-size: 10px;
+  }
+
+  .body-white {
+    font-size: 10px;
+  }
+
+  .subtitle-black {
+    font-size: 8px;
+  }
+
+  .subtitle-white {
+    font-size: 8px;
+  }
+
+  .sm-black {
+    font-size: 7px;
+  }
+
+  .sm-white {
+    font-size: 7px;
+  }
+
+
+  .box {
+    width: 215px;
+    margin: auto;
+    padding: 10px;
+    height: 70px;
+  }
+
+  .box-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .total-response-graph-box {
+    height: 240px;
+    width: 460px;
+    margin: auto;
+  }
+
+  .total-response-box {
+    height: 240px;
+    width: 190px;
+    margin: auto;
+  }
+
+  .pie-image {
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+  }
+
+  .icon-over-image {
+    height: 100px;
+    width: 100px;
+  }
+
+  .dot-1 {
+    height: 10px;
+    width: 10px;
+  }
+
+  .dot-2 {
+    height: 10px;
+    width: 10px;
+  }
+
+  .color-box-blue {
+    height: 14px;
+    width: 14px;
+  }
+
+  .color-box-green {
+    height: 14px;
+    width: 14px;
+  }
+
+  .response-img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .response-form-name {
+    font-size: 8px;
+  }
+
+  .download-response-btn {
+    font-size: 9px;
+  }
+
+  .form-control-manual {
+    width: 165px !important;
+    font-size: 8px;
+  }
+
+  .subscription-box {
+    padding: 1rem;
+    width: 200px;
+    height: 320px;
+  }
+
+  .subscription-box .heading-white {
+    font-size: 10px;
+  }
+
+  .form-check-box {
+
+    padding: 0px 10px !important;
+  }
+
+  .form-check-plan {
+    font-size: 5px;
+  }
+
+  .download-btn {
+    width: 120px;
+    height: 35px;
+    font-size: 11px;
+  }
+
+  .master-card {
+    padding: 0.5rem;
+    height: 120px;
+  }
+
+  .master-card .master-title {
+    font-size: 14px;
+  }
+
+  .master-card .master-number {
+    font-size: 10px;
+    margin: 10px 0px;
+  }
+
+  .master-card .master-valid {
+    font-size: 8px;
+  }
+
+  .master-card .master-date {
+    font-size: 8px;
+
+  }
+
+  .master-card .master-holdername {
+    margin-top: 8px;
+    font-size: 8px;
+  }
+
+  .master-card .master-type {
+    font-size: 6px;
+  }
+
+
+  .master-card img {
+    width: 35px;
+    height: 25px;
+  }
+
+  .master-card-dotted {
+    width: 205px;
+    padding: 0.5rem;
+    height: 120px;
+  }
+
+  .add-card-circle {
+    height: 50px;
+    width: 50px;
+  }
+
+  .add-card-circle i {
+    font-size: 20px;
+  }
+
+  table thead tr th.body-black {
+    font-size: 8px;
+  }
+
+  .tableFixHeadCard td {
+    width: 82px;
+    text-align: start;
+  }
+
+  table img {
+    height: 20px;
+    width: 30px;
+  }
+
+  .primary-box {
+    width: 50px;
+  }
+
+  .tab-icon {
+    font-size: 13px !important;
+  }
+
+  .react-tabs__tab-list {
+    width: 270px;
+  }
+
+  .publish-btn {
+    width: 100px !important;
+    height: 30px !important;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {}

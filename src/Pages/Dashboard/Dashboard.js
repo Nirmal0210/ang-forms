@@ -3,8 +3,8 @@ const Dashboard = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   return (
     <div className="container extra-pad">
-      <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 justify-content-between">
-        <div className="col box">
+      <div className="row gx-2">
+        <div className="col-4 box">
           <div className="row d-flex align-items-center">
             <div className="col-3">
               <div className="box-icon">
@@ -24,7 +24,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="col box">
+        <div className="col-4 box">
           <div className="row d-flex align-items-center">
             <div className="col-3">
               <div className="box-icon">
@@ -44,7 +44,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="col box">
+        <div className="col-4 box">
           <div className="row d-flex align-items-center">
             <div className="col-3">
               <div className="box-icon">
@@ -65,7 +65,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="row px-1 mt-4 justify-content-between">
+      <div className="row gx-2 my-4">
         <div className="col-9 col-lg-9 total-response-graph-box p-3">
           <div className="row">
             <div className="col-8 col-lg-8">
@@ -100,14 +100,14 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="container mt-1 p-3 text-center">
-                <div className="row row-cols-2 row-cols-lg-2 g-3 g-lg-3">
-                  <div className="col d-flex">
+                <div className="row">
+                  <div className="col-6 p-1 d-flex align-items-center">
                     <div className="dot-1"></div>
                     <div className="subtitle-black fw-bold ms-1">
                       App name 1
                     </div>
                   </div>
-                  <div className="col d-flex">
+                  <div className="col-6 p-1 d-flex align-items-center">
                     <div className="dot-2"></div>
                     <div className="subtitle-black fw-bold ms-1">
                       App name 2
@@ -166,7 +166,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="row px-1 mt-4 mb-4 justify-content-between">
+      <div className="row gx-2">
         <div className="col-9 col-lg-9 total-response-graph-box p-3">
           <div className="body-large-black fw-bold text-start">
             Recent Response
@@ -214,13 +214,7 @@ const Dashboard = () => {
                   <td className="subtitle-black">20000</td>
                   <td className="subtitle-black">2000</td>
                 </tr>
-                <tr>
-                  <td className="subtitle-black">Random ID</td>
-                  <td className="subtitle-black">Random Form Name</td>
-                  <td className="subtitle-black">Thornton</td>
-                  <td className="subtitle-black">37</td>
-                  <td className="subtitle-black">2700</td>
-                </tr>
+                
               </tbody>
             </table>
           </div>

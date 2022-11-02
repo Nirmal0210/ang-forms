@@ -67,7 +67,7 @@ const FormDialog = () => {
               className="d-flex align-items-center choice-box"
               style={{
                 border:
-                  checkedValue == "appWebsiteForm"
+                  checkedValue === "appWebsiteForm"
                     ? "1px solid #2374AB"
                     : "1px solid gray",
               }}

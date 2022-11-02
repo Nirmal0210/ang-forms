@@ -34,10 +34,8 @@ function App() {
           </>
         ) : location.pathname === "/" && !currentUser ? (
           <Login />
-        ) : location.pathname === "/signup" && !currentUser ? (
-          <Signup />
-        ) : (
-          <Navigate to={"/dashboard"} replace />
+        ) : location.pathname === "/signup" && !currentUser && (
+          <Signup /> 
         )}
       </AuthProvider>
     </>

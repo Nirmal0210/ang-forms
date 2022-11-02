@@ -461,6 +461,7 @@ input[type="file"] {
   padding: 1rem;
   border-radius: 20px;
   background-color: white;
+  margin: auto;
 }
 
 .box-icon {
@@ -474,6 +475,7 @@ input[type="file"] {
 }
 
 .total-response-graph-box {
+  margin: auto;
   background-color: white;
   height: 280px;
   border-radius: 20px;
@@ -481,6 +483,7 @@ input[type="file"] {
 }
 
 .total-response-box {
+  margin: auto;
   background-color: #FB5012;
   height: 280px;
   border-radius: 20px;
@@ -1548,6 +1551,12 @@ input[type="file"] {
     height: 30px !important;
     font-size: 12px;
   }
-}
+
+  .sidebar-btn {
+    width: 130px;
+    height: 35px;
+    font-size: 11px;
+  }
+} 
 
 @media only screen and (min-width: 769px) and (max-width: 1024px) {}

@@ -177,7 +177,7 @@ input[type="file"] {
 .big-title-white {
   color: white;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .big-title-black {
@@ -197,7 +197,7 @@ input[type="file"] {
 
 .heading-white {
   color: white;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .heading-black {
@@ -207,13 +207,13 @@ input[type="file"] {
 
 .body-large-white {
   color: white;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .body-large-black {
   text-align: center;
   color: black;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .body-black {

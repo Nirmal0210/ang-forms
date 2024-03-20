@@ -97,7 +97,7 @@ const Login = () => {
               alt="new"
             />
           </div>
-          <div className="big-title-white mt-4 mb-3">
+          <div className="big-title-white mt-3 mb-2">
             New creating forms option
           </div>
           <p className="heading-white">
@@ -117,7 +117,7 @@ const Login = () => {
             />
           </div>
         </div>
-        <div className="p-3">
+        <div className="p-1">
           <div className="title-black text-center fw-bold mb-3">Hello!</div>
           <div className="login-desc">
             <p className="body-large-black">
